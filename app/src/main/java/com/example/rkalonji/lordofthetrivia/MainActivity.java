@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity
         TriviasProvider.DatabaseHelper y = new TriviasProvider.DatabaseHelper(getApplicationContext());
         SQLiteDatabase db = y.getWritableDatabase();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.for_fragment,new ContactsFragment());
-        fragmentTransaction.commit();
-
         // The queries are written in a way that create statements are executed only if
         // the tables do not already exists
         db.execSQL(TriviasProvider.CREATE_TRIVIA_SET_DB_TABLE);
@@ -93,6 +89,17 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        if (id == R.id.launch_test_activity) {
+            Intent i = new Intent(getApplicationContext(), TestActivity.class);
+            startActivity(i);
+        }
+
+        if (id == R.id.launch_contact_fragment) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.for_fragment,new ContactsFragment());
+            fragmentTransaction.commit();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -115,8 +122,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_list_trivia) {
-            Intent i = new Intent(getApplicationContext(), TestActivity.class);
-            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
