@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.launch_contact_fragment) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.for_fragment,new SecondTestFragment());
+            fragmentTransaction.add(R.id.contact_list_fragment,new SecondTestFragment());
             fragmentTransaction.commit();
         }
 
