@@ -30,22 +30,28 @@ public class ContactsFragment extends Fragment
  * the Cursor to the ListView.
  */
     @SuppressLint("InlinedApi")
+/*    private final static String[] FROM_COLUMNS = {
+            Build.VERSION.SDK_INT
+                    >= Build.VERSION_CODES.HONEYCOMB ?
+                    TriviasProvider.NAME :
+                    TriviasProvider.TEXT
+    };*/
     private final static String[] FROM_COLUMNS = {
             Build.VERSION.SDK_INT
                     >= Build.VERSION_CODES.HONEYCOMB ?
-                    ContactsContract.Contacts.DISPLAY_NAME_PRIMARY :
-                    ContactsContract.Contacts.DISPLAY_NAME
+                    TriviasProvider.NAME :
+                    TriviasProvider.TEXT
     };
 
     @SuppressLint("InlinedApi")
     private static final String[] PROJECTION =
             {
-                    ContactsContract.Contacts._ID,
-                    ContactsContract.Contacts.LOOKUP_KEY,
+                    TriviasProvider._ID,
+                    TriviasProvider.NAME,
                     Build.VERSION.SDK_INT
                             >= Build.VERSION_CODES.HONEYCOMB ?
-                            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY :
-                            ContactsContract.Contacts.DISPLAY_NAME
+                            TriviasProvider.NAME :
+                            TriviasProvider.TEXT
 
             };
 
@@ -58,8 +64,8 @@ public class ContactsFragment extends Fragment
     @SuppressLint("InlinedApi")
     private static final String SELECTION =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                    ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
-                    ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?";
+                    TriviasProvider.NAME + " LIKE ?" :
+                    TriviasProvider.TEXT + " LIKE ?";
     // Defines a variable for the search string
     private String mSearchString;
     // Defines the array to hold values that replace the ?
@@ -93,8 +99,10 @@ public class ContactsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment layout
-        return inflater.inflate(R.layout.contact_list_fragment,
-                container, false);
+/*        return inflater.inflate(R.layout.contact_list_fragment,
+                container, false);*/
+        View contentView = inflater.inflate(R.layout.contact_list_fragment, container, false);
+        return contentView;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
