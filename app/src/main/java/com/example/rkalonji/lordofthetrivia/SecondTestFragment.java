@@ -21,7 +21,7 @@ import android.widget.ListView;
  * Created by Rkalonji on 05/07/2017.
  */
 
-public class ContactsFragment extends Fragment
+public class SecondTestFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
@@ -92,17 +92,15 @@ public class ContactsFragment extends Fragment
     private SimpleCursorAdapter mCursorAdapter;
 
     // Empty public constructor, required by the system
-    public ContactsFragment() {}
+    public SecondTestFragment() {}
 
     // A UI Fragment must inflate its View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment layout
-/*        return inflater.inflate(R.layout.contact_list_fragment,
-                container, false);*/
-        View contentView = inflater.inflate(R.layout.contact_list_fragment, container, false);
-        return contentView;
+        return inflater.inflate(R.layout.contact_list_fragment,
+                container, false);
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
