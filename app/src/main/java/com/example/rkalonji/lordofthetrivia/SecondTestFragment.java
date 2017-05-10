@@ -155,7 +155,7 @@ public class SecondTestFragment extends Fragment
         // Starts the query
         return new CursorLoader(
                 getActivity(),
-                ContactsContract.Contacts.CONTENT_URI,
+                TriviasProvider.TRIVIA_BASE_URI,
                 PROJECTION,
                 SELECTION,
                 mSelectionArgs,
