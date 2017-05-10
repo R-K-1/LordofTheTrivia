@@ -14,7 +14,7 @@
             android:text="Hello World!"
             />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_for_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +26,6 @@
             android:layout_height="wrap_content"
             tools:layout="@layout/contact_list_fragment"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
