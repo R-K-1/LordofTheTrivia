@@ -21,7 +21,7 @@ import android.widget.ListView;
  * Created by Rkalonji on 05/07/2017.
  */
 
-public class SecondTestFragment extends Fragment
+public class FirstFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
@@ -92,7 +92,7 @@ public class SecondTestFragment extends Fragment
     private SimpleCursorAdapter mCursorAdapter;
 
     // Empty public constructor, required by the system
-    public SecondTestFragment() {}
+    public FirstFragment() {}
 
     // A UI Fragment must inflate its View
     @Override
