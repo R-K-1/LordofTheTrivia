@@ -1,7 +1,6 @@
 package com.example.rkalonji.lordofthetrivia;
 
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -35,18 +34,16 @@ public class ExampleFragment extends Fragment implements LoaderManager.LoaderCal
 /*        return new CursorLoader(this,
                 Uri.parse("content://com.github.browep.cursorloader.data")
                 , new String[]{"col1"}, null, null, null);*/
-        return new CursorLoader(getContext(), null, null, null, null, null);
+        return new CursorLoader(getContext(), TriviasProvider.TRIVIAS_BASE_URI,
+                null, null, null, null);
     }
 
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        cursor.moveToFirst();
-        // String text = (String) textView.getText();
-        while (!cursor.isAfterLast()) {
-            // text += "<br />" + cursor.getString(1);
-            cursor.moveToNext();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cursor.getString(cursor.getColumnIndex(TriviasProvider.NAME));
+            } while (cursor.moveToNext());
         }
-
-        // textView.setText(Html.fromHtml(text) );
 
     }
 
