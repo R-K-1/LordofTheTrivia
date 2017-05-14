@@ -12,9 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Rkalonji on 04/21/2017.
@@ -32,12 +30,6 @@ public class TriviasProvider extends ContentProvider {
     public static final int POSITION_FIREBASE_ID = 1;
     public static final int POSITION_NAME = 2;
     public static final int POSITION_IMAGE_PATH = 3;
-    public static final ArrayList<String> TRIVIA_SET_COLUMNS = new ArrayList<String>() {{
-        TRIVIA_SET_COLUMNS.add(_ID);
-        TRIVIA_SET_COLUMNS.add(TRIVIA_SET_FIREBASE_ID);
-        TRIVIA_SET_COLUMNS.add(NAME);
-        TRIVIA_SET_COLUMNS.add(IMAGE_PATH);
-    }};
 
     // option table unique columns
     public static final String TEXT = "text";
@@ -79,7 +71,7 @@ public class TriviasProvider extends ContentProvider {
             " CREATE TABLE IF NOT EXISTS " + TRIVIA_SET_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
-                    " " + NAME + "TEXT NOT NULL, " +
+                    " " + NAME + " TEXT NOT NULL, " +
                     " " + IMAGE_PATH + " TEXT);";
 
     public static final String QUESTION_TABLE_NAME = "question";
@@ -87,7 +79,7 @@ public class TriviasProvider extends ContentProvider {
             " CREATE TABLE IF NOT EXISTS " + QUESTION_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
-                    " " + TEXT + "TEXT NOT NULL);";
+                    " " + TEXT + " TEXT NOT NULL);";
 
     public static final String OPTION_TABLE_NAME = "option";
     public static final String CREATE_OPTION_DB_TABLE =
@@ -105,7 +97,7 @@ public class TriviasProvider extends ContentProvider {
                     " " + FK_TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
                     " " + SCORE + " TEXT NOT NULL, " +
                     " " + TIMESTAMP + " TEXT NOT NULL, " +
-                    " " + IS_REMOTE + "INTEGER NOT NULL, " +
+                    " " + IS_REMOTE + " INTEGER NOT NULL, " +
                     " " + IS_SHARED + " INTEGER NOT NULL);";
 
     /**
