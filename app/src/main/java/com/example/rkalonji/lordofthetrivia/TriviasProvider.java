@@ -12,7 +12,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Rkalonji on 04/21/2017.
@@ -26,6 +28,16 @@ public class TriviasProvider extends ContentProvider {
     public static final String TRIVIA_SET_FIREBASE_ID = "triviaSetfirebaseId";
     public static final String NAME = "name";
     public static final String IMAGE_PATH = "imagePath";
+    public static final int POSITION_ID = 0;
+    public static final int POSITION_FIREBASE_ID = 1;
+    public static final int POSITION_NAME = 2;
+    public static final int POSITION_IMAGE_PATH = 3;
+    public static final ArrayList<String> TRIVIA_SET_COLUMNS = new ArrayList<String>() {{
+        TRIVIA_SET_COLUMNS.add(_ID);
+        TRIVIA_SET_COLUMNS.add(TRIVIA_SET_FIREBASE_ID);
+        TRIVIA_SET_COLUMNS.add(NAME);
+        TRIVIA_SET_COLUMNS.add(IMAGE_PATH);
+    }};
 
     // option table unique columns
     public static final String TEXT = "text";
@@ -42,15 +54,16 @@ public class TriviasProvider extends ContentProvider {
 
     private static HashMap<String, String> TRIVIA_SETS_PROJECTION_MAP;
 
-    public static final int TRIVIA = 1;
+    public static final int TRIVIAS = 1;
 
     public static final String BASE = "content://" + PROVIDER_NAME;
-    public static final String TRIVIA_BASE = "content://" + PROVIDER_NAME + "/trivia";
-    public static final Uri TRIVIA_BASE_URI = Uri.parse(TRIVIA_BASE);
+    public static final String TRIVIAS_BASE = "content://" + PROVIDER_NAME + "/trivias";
+    public static final Uri TRIVIAS_BASE_URI = Uri.parse(TRIVIAS_BASE);
 
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "trivias", TRIVIAS);
     }
 
     /**
@@ -147,7 +160,7 @@ public class TriviasProvider extends ContentProvider {
         long rowID = 0;
 
         switch (uriMatcher.match(uri)) {
-            case TRIVIA:
+            case TRIVIAS:
                 rowID = db.insert(TRIVIA_SET_TABLE_NAME, "", values);
                 break;
         }
@@ -155,7 +168,7 @@ public class TriviasProvider extends ContentProvider {
          * If record is added successfully
          */
         if (rowID > 0) {
-            Uri _uri = ContentUris.withAppendedId(TRIVIA_BASE_URI, rowID);
+            Uri _uri = ContentUris.withAppendedId(TRIVIAS_BASE_URI, rowID);
             getContext().getContentResolver().notifyChange(_uri, null);
             return _uri;
         }
@@ -169,7 +182,7 @@ public class TriviasProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         switch (uriMatcher.match(uri)) {
-            case TRIVIA:
+            case TRIVIAS:
                 qb.setTables(TRIVIA_SET_TABLE_NAME);
                 qb.setProjectionMap(TRIVIA_SETS_PROJECTION_MAP);
                 break;
@@ -195,7 +208,7 @@ public class TriviasProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int count = 0;
         switch (uriMatcher.match(uri)){
-            case TRIVIA:
+            case TRIVIAS:
                 count = db.delete(TRIVIA_SET_TABLE_NAME, selection, selectionArgs);
                 break;
 
@@ -212,7 +225,7 @@ public class TriviasProvider extends ContentProvider {
                       String selection, String[] selectionArgs) {
         int count = 0;
         switch (uriMatcher.match(uri)) {
-            case TRIVIA:
+            case TRIVIAS:
                 count = db.update(TRIVIA_SET_TABLE_NAME, values, selection, selectionArgs);
                 break;
 
@@ -230,7 +243,7 @@ public class TriviasProvider extends ContentProvider {
             /**
              * Get all student records
              */
-            case TRIVIA:
+            case TRIVIAS:
                 return "vnd.android.cursor.dir/vnd.example.students";
 
             default:
