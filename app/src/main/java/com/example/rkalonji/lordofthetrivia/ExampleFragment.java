@@ -32,6 +32,14 @@ public class ExampleFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.example_fragment, container, false);
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -45,13 +53,6 @@ public class ExampleFragment extends Fragment implements LoaderManager.LoaderCal
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.example_fragment, container, false);
-    }
-
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(0, null, this);
     }
