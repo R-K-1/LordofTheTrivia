@@ -1,6 +1,7 @@
 package com.example.rkalonji.lordofthetrivia;
 
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -70,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                fragmentClass = ExampleFragment.class;
+                fragmentClass = TriviaSetsGridFragment.class;
                 break;
             case R.id.nav_second_fragment:
-                fragmentClass = ExampleFragment.class;
+                fragmentClass = TriviaSetsGridFragment.class;
                 break;
             case R.id.nav_third_fragment:
-                fragmentClass = ExampleFragment.class;
+                fragmentClass = TriviaSetsGridFragment.class;
                 break;
             default:
-                fragmentClass = ExampleFragment.class;
+                fragmentClass = TriviaSetsGridFragment.class;
         }
 
         try {
