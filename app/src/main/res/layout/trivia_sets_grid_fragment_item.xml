@@ -8,8 +8,6 @@
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:elevation="@dimen/card_elevation"
-    android:clickable="true"
-    android:focusable="true"
     android:foreground="?selectableItemBackground"
     app:theme="@style/AppTheme.NoActionBar.Card">
 
