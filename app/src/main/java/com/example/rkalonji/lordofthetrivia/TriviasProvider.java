@@ -45,8 +45,13 @@ public class TriviasProvider extends ContentProvider {
     public static final String IS_SHARED = "isShared";
 
     private static HashMap<String, String> TRIVIA_SETS_PROJECTION_MAP;
+    private static HashMap<String, String> QUESTION_SETS_PROJECTION_MAP;
+    private static HashMap<String, String> OPTION_SETS_PROJECTION_MAP;
 
     public static final int TRIVIAS = 1;
+    public static final int TRIVIA_ID = 2;
+    public static final int QUESTION_ID = 3;
+    public static final int OPTIONS_QUESTION_ID = 4;
 
     public static final String BASE = "content://" + PROVIDER_NAME;
     public static final String TRIVIAS_BASE = "content://" + PROVIDER_NAME + "/trivias";
@@ -56,6 +61,10 @@ public class TriviasProvider extends ContentProvider {
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "trivias", TRIVIAS);
+        uriMatcher.addURI(PROVIDER_NAME, "trivias/#", TRIVIA_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "questions/#", QUESTION_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "options/#", OPTIONS_QUESTION_ID);
+
     }
 
     /**
@@ -177,6 +186,21 @@ public class TriviasProvider extends ContentProvider {
             case TRIVIAS:
                 qb.setTables(TRIVIA_SET_TABLE_NAME);
                 qb.setProjectionMap(TRIVIA_SETS_PROJECTION_MAP);
+                break;
+
+            case TRIVIA_ID:
+                qb.setTables(TRIVIA_SET_TABLE_NAME);
+                qb.appendWhere( TRIVIA_SET_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            case QUESTION_ID:
+                qb.setTables(QUESTION_TABLE_NAME);
+                qb.appendWhere( FK_TRIVIA_SET_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            case OPTIONS_QUESTION_ID:
+                qb.setTables(OPTION_TABLE_NAME);
+                qb.appendWhere( FK_QUESTION_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
                 break;
         }
 
