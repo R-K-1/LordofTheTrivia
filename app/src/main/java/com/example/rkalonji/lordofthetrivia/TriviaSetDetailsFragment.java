@@ -2,6 +2,10 @@ package com.example.rkalonji.lordofthetrivia;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Movie;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,15 +15,26 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+import java.math.BigInteger;
+
 /**
  * Created by rkalonji on 05/29/2017.
  */
 
-public class TriviaSetDetails extends Fragment {
+public class TriviaSetDetailsFragment extends Fragment {
+
+    private Utils utils;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.trivia_set_details, container, false);
+
+        utils = new Utils();
+        utils.loadAddBanner(rootView, R.id.adViewTriviaSetDetails);
 
         return rootView;
     }
@@ -49,6 +64,18 @@ public class TriviaSetDetails extends Fragment {
         }
 
 
+    }
+
+    public class getQuestionsFromDB extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(String content) {
+        }
     }
 
 }

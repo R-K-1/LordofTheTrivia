@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
-
+    private Utils utils;
     // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
     // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
     private ActionBarDrawerToggle drawerToggle;
@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        utils = new Utils();
+        utils.loadAddBanner(mDrawer, R.id.adViewMainActivity);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

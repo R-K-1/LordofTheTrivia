@@ -13,7 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
+
+import com.example.rkalonji.lordofthetrivia.Utils;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by Rkalonji on 05/21/2017.
@@ -23,6 +27,7 @@ public class TriviaSetsGridFragment extends Fragment
         implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private TriviaSetsGridAdapter adapter;
+    private Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +39,9 @@ public class TriviaSetsGridFragment extends Fragment
         adapter = new TriviaSetsGridAdapter(getActivity(), R.layout.trivia_sets_grid_fragment_item);
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(this);
+
+        utils = new Utils();
+        utils.loadAddBanner(rootView, R.id.adViewTriviaSetsGrid);
 
         getLoaderManager().initLoader(0, null, this);
         return rootView;
@@ -61,7 +69,7 @@ public class TriviaSetsGridFragment extends Fragment
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
-        fragmentClass = TriviaSetDetails.class;
+        fragmentClass = TriviaSetDetailsFragment.class;
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();
