@@ -50,19 +50,26 @@ public class TriviasProvider extends ContentProvider {
 
     public static final int TRIVIAS = 1;
     public static final int TRIVIA_ID = 2;
-    public static final int QUESTION_ID = 3;
+    public static final int QUESTIONS_TRIVIA_ID = 3;
     public static final int OPTIONS_QUESTION_ID = 4;
 
     public static final String BASE = "content://" + PROVIDER_NAME;
     public static final String TRIVIAS_BASE = "content://" + PROVIDER_NAME + "/trivias";
     public static final Uri TRIVIAS_BASE_URI = Uri.parse(TRIVIAS_BASE);
+    public static final String QUESTIONS_BASE = "content://" + PROVIDER_NAME + "/questions";
+    public static final Uri QUESTIONS_BASE_URI = Uri.parse(QUESTIONS_BASE);
+    public static final String GET_QUESTIONS_URI = BASE + "/questions/";
+    public static final String OPTIONS_BASE = "content://" + PROVIDER_NAME + "/options";
+    public static final Uri OPTIONS_BASE_URI = Uri.parse(OPTIONS_BASE);
+    public static final String GET_OPTIONS = BASE + "/options/";
+
 
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "trivias", TRIVIAS);
         uriMatcher.addURI(PROVIDER_NAME, "trivias/#", TRIVIA_ID);
-        uriMatcher.addURI(PROVIDER_NAME, "questions/#", QUESTION_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "questions/#", QUESTIONS_TRIVIA_ID);
         uriMatcher.addURI(PROVIDER_NAME, "options/#", OPTIONS_QUESTION_ID);
 
     }
@@ -193,9 +200,9 @@ public class TriviasProvider extends ContentProvider {
                 qb.appendWhere( TRIVIA_SET_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
                 break;
 
-            case QUESTION_ID:
+            case QUESTIONS_TRIVIA_ID:
                 qb.setTables(QUESTION_TABLE_NAME);
-                qb.appendWhere( FK_TRIVIA_SET_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
+                qb.appendWhere( TRIVIA_SET_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
                 break;
 
             case OPTIONS_QUESTION_ID:

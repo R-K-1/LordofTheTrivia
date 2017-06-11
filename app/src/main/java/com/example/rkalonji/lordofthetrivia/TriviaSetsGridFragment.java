@@ -18,6 +18,7 @@ import com.example.rkalonji.lordofthetrivia.Utils;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.internal.request.StringParcel;
 
 /**
  * Created by Rkalonji on 05/21/2017.
@@ -67,7 +68,9 @@ public class TriviaSetsGridFragment extends Fragment
         /*Toast toast = Toast.makeText(getContext(), "hello", Toast.LENGTH_LONG);
         toast.show();*/
         // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
+        TriviaSetDetailsFragment triviaSetDetailsFragment = new TriviaSetDetailsFragment();
+        triviaSetDetailsFragment.setGlobalTriviaSetFirebaseId(String.valueOf(id));
+/*        Fragment fragment = null;
         Class fragmentClass;
         fragmentClass = TriviaSetDetailsFragment.class;
 
@@ -75,11 +78,12 @@ public class TriviaSetsGridFragment extends Fragment
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        // fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, triviaSetDetailsFragment).commit();
     }
 
     @Override
