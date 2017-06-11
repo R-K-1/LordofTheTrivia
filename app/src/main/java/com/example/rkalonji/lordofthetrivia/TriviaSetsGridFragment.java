@@ -65,20 +65,9 @@ public class TriviaSetsGridFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        /*Toast toast = Toast.makeText(getContext(), "hello", Toast.LENGTH_LONG);
-        toast.show();*/
         // Create a new fragment and specify the fragment to show based on nav item clicked
         TriviaSetDetailsFragment triviaSetDetailsFragment = new TriviaSetDetailsFragment();
         triviaSetDetailsFragment.setGlobalTriviaSetFirebaseId(String.valueOf(id));
-/*        Fragment fragment = null;
-        Class fragmentClass;
-        fragmentClass = TriviaSetDetailsFragment.class;
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
