@@ -10,8 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+
 import java.util.ArrayList;
 
 /**
@@ -26,7 +25,7 @@ public class TriviaSetDetailsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "TriviaDetailsFragment";
-    private static String globalTriviaSetFirebaseId = "";
+    private static String mTriviaSetFirebaseId = "";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class TriviaSetDetailsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.trivia_set_details, container, false);
 
         utils = new Utils();
-        utils.loadAddBanner(rootView, R.id.adViewTriviaSetDetails);
+        utils.loadAddBanner(rootView, R.id.trivia_set_details_ad_view);
 
         return rootView;
     }
@@ -43,11 +42,11 @@ public class TriviaSetDetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.trivia_set_details_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        new getQuestionsFromDB().execute(globalTriviaSetFirebaseId);
+        new getQuestionsFromDB().execute(mTriviaSetFirebaseId);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class TriviaSetDetailsFragment extends Fragment {
     }
 
     public void setGlobalTriviaSetFirebaseId(String triviaSetFirebaseId) {
-        globalTriviaSetFirebaseId = triviaSetFirebaseId;
+        mTriviaSetFirebaseId = triviaSetFirebaseId;
     }
 
     public class getQuestionsFromDB extends AsyncTask<String, Integer, String> {

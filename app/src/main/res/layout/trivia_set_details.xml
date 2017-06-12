@@ -6,14 +6,23 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/trivia_set_details_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/submit_trivia"
         android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/submit_trivia"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_above="@+id/trivia_set_details_ad_view"
+        android:layout_alignParentRight="true"
+        android:text="@string/submit_trivia" />
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adViewTriviaSetDetails"
+        android:id="@+id/trivia_set_details_ad_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
