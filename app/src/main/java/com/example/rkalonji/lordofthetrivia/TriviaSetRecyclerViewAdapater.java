@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,6 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
 
         @Override
         public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 
@@ -71,11 +70,23 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
         holder.triviaSetQuestionOptionsLayout.setOrientation(LinearLayout.VERTICAL);
         for (String option:optionsArray) {
             String[] optionArray = option.split("\\/");
-            Button btnTag = new Button(mContext);
+            final ToggleButton btnTag = new ToggleButton(mContext);
             btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             btnTag.setText(optionArray[0]);
+            btnTag.setTextOn(optionArray[0]);
+            btnTag.setTextOff(optionArray[0]);
             btnTag.setId(Integer.parseInt(optionArray[2]));
+            btnTag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((ToggleButton) v).isChecked()) {
+                        btnTag.setBackgroundResource(R.color.colorPrimaryDark);
+                    } else {
+                        btnTag.setBackgroundResource(R.color.gray);
+                    }
+                }
+            });
             holder.triviaSetQuestionOptionsLayout.addView(btnTag);
         }
     }

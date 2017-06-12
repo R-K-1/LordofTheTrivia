@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,13 @@ public class TriviaSetDetailsFragment extends Fragment {
         utils = new Utils();
         utils.loadAddBanner(rootView, R.id.trivia_set_details_ad_view);
 
+        final Button button = (Button) rootView.findViewById(R.id.submit_trivia);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+            }
+        });
+
         return rootView;
     }
 
@@ -52,12 +60,6 @@ public class TriviaSetDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-/*        ((TriviaSetRecyclerViewAdapater) mAdapter).setOnItemClickListener(new TriviaSetRecyclerViewAdapater
-                .MyClickListener() {
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-            }
-        });*/
     }
 
     public void setGlobalTriviaSetFirebaseId(String triviaSetFirebaseId) {
