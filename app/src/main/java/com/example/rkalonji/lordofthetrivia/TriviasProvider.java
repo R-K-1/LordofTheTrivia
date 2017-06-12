@@ -61,7 +61,7 @@ public class TriviasProvider extends ContentProvider {
     public static final String GET_QUESTIONS_URI = BASE + "/questions/";
     public static final String OPTIONS_BASE = "content://" + PROVIDER_NAME + "/options";
     public static final Uri OPTIONS_BASE_URI = Uri.parse(OPTIONS_BASE);
-    public static final String GET_OPTIONS = BASE + "/options/";
+    public static final String GET_OPTIONS_URI = BASE + "/options/";
 
 
     static final UriMatcher uriMatcher;
@@ -102,7 +102,7 @@ public class TriviasProvider extends ContentProvider {
             " CREATE TABLE IF NOT EXISTS " + OPTION_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + TEXT + " TEXT NOT NULL, " +
-                    " " + IS_ANSWER + "INTEGER NOT NULL, " +
+                    " " + IS_ANSWER + " INTEGER NOT NULL, " +
                     " " + FK_QUESTION_FIREBASE_ID + " TEXT);";
 
     public static final String BEST_SCORE_TABLE_NAME = "best_score";

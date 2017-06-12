@@ -1,7 +1,6 @@
 package com.example.rkalonji.lordofthetrivia;
 
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;

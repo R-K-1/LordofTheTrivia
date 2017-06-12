@@ -1,9 +1,13 @@
 package com.example.rkalonji.lordofthetrivia;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import static android.R.attr.y;
 
 /**
  * Created by rkalonji on 05/31/2017.
@@ -19,5 +23,10 @@ public class Utils {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
+    }
+
+    public SQLiteDatabase returnWritableDatabase (Context context) {
+        TriviasProvider.DatabaseHelper x = new TriviasProvider.DatabaseHelper(context);
+        return x.getWritableDatabase();
     }
 }

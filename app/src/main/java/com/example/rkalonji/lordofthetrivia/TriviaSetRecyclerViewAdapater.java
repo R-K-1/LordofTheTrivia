@@ -1,10 +1,13 @@
 package com.example.rkalonji.lordofthetrivia;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,17 +22,18 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
     private static String LOG_TAG = "TriviaRecyclerAdapter";
     private ArrayList<Question> mDataset;
     private static MyClickListener myClickListener;
+    private Context mContext;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
         TextView label;
-        TextView dateTime;
+        LinearLayout triviaSetQuestionOptionsLayout;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.trivia_set_test_textView1);
-            dateTime = (TextView) itemView.findViewById(R.id.trivia_set_test_textView2);
+            triviaSetQuestionOptionsLayout = (LinearLayout) itemView.findViewById(R.id.trivia_set_question_options_layout);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -44,8 +48,9 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public TriviaSetRecyclerViewAdapater(ArrayList<Question> myDataset) {
+    public TriviaSetRecyclerViewAdapater(ArrayList<Question> myDataset, Context context) {
         mDataset = myDataset;
+        mContext = context;
     }
 
     @Override
@@ -61,7 +66,18 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getmText1());
-        holder.dateTime.setText(mDataset.get(position).getmText2());
+        String options = mDataset.get(position).getmText2();
+        String[] optionsArray = options.split("\\|");
+        holder.triviaSetQuestionOptionsLayout.setOrientation(LinearLayout.VERTICAL);
+        for (String option:optionsArray) {
+            String[] optionArray = option.split("\\/");
+            Button btnTag = new Button(mContext);
+            btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            btnTag.setText(optionArray[0]);
+            btnTag.setId(Integer.parseInt(optionArray[2]));
+            holder.triviaSetQuestionOptionsLayout.addView(btnTag);
+        }
     }
 
     public void addItem(Question dataObj, int index) {
