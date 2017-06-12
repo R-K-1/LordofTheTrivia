@@ -14,6 +14,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import static android.R.attr.button;
+
 /**
  * Created by rkalonji on 05/29/2017.
  */
@@ -36,8 +38,8 @@ public class TriviaSetDetailsFragment extends Fragment {
         utils = new Utils();
         utils.loadAddBanner(rootView, R.id.trivia_set_details_ad_view);
 
-        final Button button = (Button) rootView.findViewById(R.id.submit_trivia);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button submitTriviaButton = (Button) rootView.findViewById(R.id.submit_trivia);
+        submitTriviaButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
             }
