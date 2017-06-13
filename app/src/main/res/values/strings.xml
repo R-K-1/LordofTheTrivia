@@ -14,4 +14,7 @@
     <string name="action_launch_contacts_fragments">Contacts</string>
 
     <string name="submit_trivia">Get Score</string>
+
+    <string name="question_id">qId</string>
+    <string name="is_answer">isAnswer</string>
 </resources>

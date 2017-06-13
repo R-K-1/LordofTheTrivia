@@ -16,21 +16,21 @@ import java.util.ArrayList;
  * Created by rkalonji on 06/08/2017.
  */
 
-public class TriviaSetRecyclerViewAdapater extends RecyclerView
-        .Adapter<TriviaSetRecyclerViewAdapater
-        .DataObjectHolder> {
+public class TriviaSetRecyclerViewAdapter extends RecyclerView
+        .Adapter<TriviaSetRecyclerViewAdapter.QuestionsAndOptionsHolder> {
     private static String LOG_TAG = "TriviaRecyclerAdapter";
     private ArrayList<Question> mDataset;
     private static MyClickListener myClickListener;
     private Context mContext;
+    private ArrayList<ToggleButton> mButtons = new ArrayList<ToggleButton>();
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder
+    public static class QuestionsAndOptionsHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
         TextView label;
         LinearLayout triviaSetQuestionOptionsLayout;
 
-        public DataObjectHolder(View itemView) {
+        public QuestionsAndOptionsHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.trivia_set_test_textView1);
             triviaSetQuestionOptionsLayout = (LinearLayout) itemView.findViewById(R.id.trivia_set_question_options_layout);
@@ -47,25 +47,28 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public TriviaSetRecyclerViewAdapater(ArrayList<Question> myDataset, Context context) {
+    public TriviaSetRecyclerViewAdapter(ArrayList<Question> myDataset, Context context) {
         mDataset = myDataset;
         mContext = context;
     }
 
     @Override
-    public DataObjectHolder onCreateViewHolder(ViewGroup parent,
-                                               int viewType) {
+    public QuestionsAndOptionsHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.trivia_set_question_layout, parent, false);
 
-        DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
-        return dataObjectHolder;
+        QuestionsAndOptionsHolder questionsAndOptionsHolder = new QuestionsAndOptionsHolder(view);
+        return questionsAndOptionsHolder;
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmText1());
-        String options = mDataset.get(position).getmText2();
+    public void onBindViewHolder(QuestionsAndOptionsHolder holder, int position) {
+        holder.label.setText(mDataset.get(position).getmQuestionText());
+        // questionsOptions is a pipe and slash delimited string containing option information
+        // in the following format
+        // optiontext/isAnswer/optionId/questionId|
+        String options = mDataset.get(position).getmQuestionOptions();
         String[] optionsArray = options.split("\\|");
         holder.triviaSetQuestionOptionsLayout.setOrientation(LinearLayout.VERTICAL);
         for (String option:optionsArray) {
@@ -73,22 +76,36 @@ public class TriviaSetRecyclerViewAdapater extends RecyclerView
             final ToggleButton btnTag = new ToggleButton(mContext);
             btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
+            // Option text doesn't change no matter the isChecked Status
             btnTag.setText(optionArray[0]);
             btnTag.setTextOn(optionArray[0]);
             btnTag.setTextOff(optionArray[0]);
+            // Set optionId as buttonId
             btnTag.setId(Integer.parseInt(optionArray[2]));
+            // To help validating answers and counting score tags are used to keep track of
+            // questionId and whether or not option is correct answer
+            // Set isAnswer as tag 1
+            btnTag.setTag(R.string.is_answer,optionArray[1]);
+            // Set questionId as tag 2
+            btnTag.setTag(R.string.question_id,optionArray[3]);
+
             btnTag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (((ToggleButton) v).isChecked()) {
-                        btnTag.setBackgroundResource(R.color.colorPrimaryDark);
+                        btnTag.setBackgroundResource(R.color.colorPrimary);
                     } else {
                         btnTag.setBackgroundResource(R.color.gray);
                     }
                 }
             });
+            mButtons.add(btnTag);
             holder.triviaSetQuestionOptionsLayout.addView(btnTag);
         }
+    }
+
+    public ArrayList<ToggleButton> getOptions () {
+        return mButtons;
     }
 
     public void addItem(Question dataObj, int index) {

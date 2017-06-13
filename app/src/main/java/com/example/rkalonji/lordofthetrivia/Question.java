@@ -5,27 +5,27 @@ package com.example.rkalonji.lordofthetrivia;
  */
 
 public class Question {
-    private String mText1;
-    private String mText2;
+    private String mQuestionText;
+    private String mQuestionOptions;
 
-    Question (String text1, String text2){
-        mText1 = text1;
-        mText2 = text2;
+    Question (String questionText, String questionOptions){
+        mQuestionText = questionText;
+        mQuestionOptions = questionOptions;
     }
 
-    public String getmText1() {
-        return mText1;
+    public String getmQuestionText() {
+        return mQuestionText;
     }
 
-    public void setmText1(String mText1) {
-        this.mText1 = mText1;
+    public void setmQuestionText(String questionText) {
+        this.mQuestionText = questionText;
     }
 
-    public String getmText2() {
-        return mText2;
+    public String getmQuestionOptions() {
+        return mQuestionOptions;
     }
 
-    public void setmText2(String mText2) {
-        this.mText2 = mText2;
+    public void setmQuestionOptions(String questionOptions) {
+        this.mQuestionOptions = questionOptions;
     }
 }
