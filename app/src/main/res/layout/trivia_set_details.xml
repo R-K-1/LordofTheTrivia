@@ -9,7 +9,7 @@
         android:id="@+id/trivia_set_details_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/submit_trivia"
+        android:layout_above="@+id/trivia_set_details_ad_view"
         android:scrollbars="vertical"/>
 
     <Button
@@ -19,6 +19,14 @@
         android:layout_above="@+id/trivia_set_details_ad_view"
         android:layout_alignParentRight="true"
         android:text="@string/submit_trivia" />
+
+    <Button
+        android:id="@+id/reset_trivia"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_above="@+id/trivia_set_details_ad_view"
+        android:layout_alignParentLeft="true"
+        android:text="@string/reset_trivia" />
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"

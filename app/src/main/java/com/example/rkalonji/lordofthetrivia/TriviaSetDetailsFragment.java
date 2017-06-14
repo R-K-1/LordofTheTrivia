@@ -69,7 +69,7 @@ public class TriviaSetDetailsFragment extends Fragment {
                                 case 2:
                                     break;
                                 default:
-                                    questionsStatus.put((String) option.getTag(R.string.question_id), 2);
+                                    questionsStatus.put((String) option.getTag(R.string.question_id), 1);
                                     break;
                             }
 
@@ -77,6 +77,11 @@ public class TriviaSetDetailsFragment extends Fragment {
                             option.setBackgroundResource(R.color.red);
                             questionsStatus.put((String) option.getTag(R.string.question_id), 1);
                         }
+                    }
+
+                    // Make correct answer background green even if it wasn't selected
+                    if (option.getTag(R.string.is_answer).equals("1")) {
+                        option.setBackgroundResource(R.color.green);
                     }
                 }
 
@@ -91,14 +96,29 @@ public class TriviaSetDetailsFragment extends Fragment {
                 }
                 double percentage = (numberOfCorrectAnswers / numberOfQuestions) * 100;
                 Toast.makeText(getContext(), String.valueOf(percentage), Toast.LENGTH_LONG).show();
+                resetQuestionsStatus();
+            }
+        });
+
+        final Button resetTriviaButton = (Button) rootView.findViewById(R.id.reset_trivia);
+        resetTriviaButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                for (ToggleButton option : mAdapter.getOptions()) {
+                    option.setBackgroundResource(R.color.gray);
+                    option.setChecked(false);
+                }
+                resetQuestionsStatus();
             }
         });
 
         return rootView;
     }
 
-    private void updateQuestionStatus (ToggleButton option) {
-
+    private void resetQuestionsStatus () {
+        for (Map.Entry<String, Integer> questionStatus : questionsStatus.entrySet()) {
+            questionStatus.setValue(0);
+        }
     }
 
     @Override
