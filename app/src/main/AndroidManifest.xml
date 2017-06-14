@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rkalonji.lordofthetrivia">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -37,6 +36,16 @@
 
         <provider android:name=".TriviasProvider"
             android:authorities="com.example.rkalonji.lordofthetrivia"/>
+
+        <!-- Alarm service used to schedule job retrieving updates from server -->
+        <receiver
+            android:name=".Sync.AlarmReceiver"
+            android:process=":remote"/>
+
+        <service
+            android:name=".AlarmService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
