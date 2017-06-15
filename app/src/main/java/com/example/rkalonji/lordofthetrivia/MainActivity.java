@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         utils = new Utils();
         utils.loadAddBanner(mDrawer, R.id.adViewMainActivity);
+
+        scheduleAlarm();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

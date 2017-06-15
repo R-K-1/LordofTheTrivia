@@ -9,14 +9,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.Executor;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by Rkalonji on 06/14/2017.
@@ -58,6 +55,6 @@ public class AlarmService extends IntentService {
     }
 
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
-
+        Log.d(LOG_TAG, "executing task after sign in");
     }
 }
