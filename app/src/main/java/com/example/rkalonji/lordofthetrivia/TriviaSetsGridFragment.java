@@ -71,7 +71,7 @@ public class TriviaSetsGridFragment extends Fragment
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
-        // fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        // fragmentManager.beginTransaction().replace(R.firebaseId.flContent, fragment).commit();
         fragmentManager.beginTransaction().replace(R.id.flContent, triviaSetDetailsFragment).commit();
     }
 

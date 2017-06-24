@@ -64,10 +64,10 @@ public class TriviaSetRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(QuestionsAndOptionsHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmQuestionText());
+        holder.label.setText(mDataset.get(position).getText());
         // questionsOptions is a pipe and slash delimited string containing option information
         // in the following format
-        // optiontext/isAnswer/optionId/questionId|
+        // optiontext/isAnswer/optionId/questionFirebaseId|
         String options = mDataset.get(position).getmQuestionOptions();
         String[] optionsArray = options.split("\\|");
         holder.triviaSetQuestionOptionsLayout.setOrientation(LinearLayout.VERTICAL);
@@ -83,10 +83,10 @@ public class TriviaSetRecyclerViewAdapter extends RecyclerView
             // Set optionId as buttonId
             btnTag.setId(Integer.parseInt(optionArray[2]));
             // To help validating answers and counting score tags are used to keep track of
-            // questionId and whether or not option is correct answer
+            // questionFirebaseId and whether or not option is correct answer
             // Set isAnswer as tag 1
             btnTag.setTag(R.string.is_answer,optionArray[1]);
-            // Set questionId as tag 2
+            // Set questionFirebaseId as tag 2
             btnTag.setTag(R.string.question_id,optionArray[3]);
 
             btnTag.setOnClickListener(new View.OnClickListener() {

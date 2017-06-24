@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,12 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import static android.R.attr.id;
 
 /**
  * Created by Rkalonji on 06/14/2017.
@@ -64,6 +59,55 @@ public class AlarmService extends IntentService {
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
         Log.d(LOG_TAG, "executing task after sign in");
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+
+        firebaseDatabase.child("categories").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<TriviaCategory> options = new ArrayList<TriviaCategory>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    TriviaCategory triviaCategory = snapshot.getValue(TriviaCategory.class);
+                    options.add(triviaCategory);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        firebaseDatabase.child("triviaSets").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<TriviaSet> triviaSets = new ArrayList<TriviaSet>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    TriviaSet triviaSet = snapshot.getValue(TriviaSet.class);
+                    triviaSets.add(triviaSet);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        firebaseDatabase.child("questions").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Question> questions = new ArrayList<Question>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Question question = snapshot.getValue(Question.class);
+                    questions.add(question);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
         firebaseDatabase.child("options").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,6 +123,21 @@ public class AlarmService extends IntentService {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-        Log.d(LOG_TAG, "got trivia");
+
+        firebaseDatabase.child("scores").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Score> scores = new ArrayList<Score>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Score score = snapshot.getValue(Score.class);
+                    scores.add(score);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 }
