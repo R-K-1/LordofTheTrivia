@@ -11,6 +11,10 @@
     android:foreground="?selectableItemBackground"
     app:theme="@style/AppTheme.NoActionBar.Card">
 
+    <ImageView android:id="@+id/trivia_set_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+
     <TextView
         android:id="@android:id/text1"
         android:layout_width="match_parent"

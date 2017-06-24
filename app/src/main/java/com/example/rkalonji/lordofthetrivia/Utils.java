@@ -1,11 +1,20 @@
 package com.example.rkalonji.lordofthetrivia;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
 
 import static android.R.attr.y;
 
@@ -14,6 +23,10 @@ import static android.R.attr.y;
  */
 
 public class Utils {
+
+    private String filesDirName = "LOTTR";
+
+
     public void loadAddBanner (View v, int resourceId) {
         AdView mAdView = (AdView) v.findViewById(resourceId);
         // Create an ad request. Check logcat output for the hashed device ID to
@@ -28,5 +41,29 @@ public class Utils {
     public SQLiteDatabase returnWritableDatabase (Context context) {
         TriviasProvider.DatabaseHelper x = new TriviasProvider.DatabaseHelper(context);
         return x.getWritableDatabase();
+    }
+
+    public void saveFileFromFirebase(Context context, StorageReference filePathReference,
+                                     String filePath) {
+        File filesDir = context.getDir(filesDirName, Context.MODE_PRIVATE);
+        File file = new File(filesDir, filePath);
+        filePathReference.getFile(file).addOnSuccessListener(
+                new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public File getFileFromInternalStorage (Context context, String imageDir, String filePath) {
+        File directory = context.getDir(filesDirName, Context.MODE_PRIVATE);
+        File file = new File(directory, filePath);
+
+        return file;
     }
 }

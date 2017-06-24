@@ -2,6 +2,7 @@ package com.example.rkalonji.lordofthetrivia;
 
 import android.app.IntentService;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -16,7 +17,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -27,9 +31,15 @@ import java.util.concurrent.Executors;
 
 public class AlarmService extends IntentService {
     private Context context;
+    private ContextWrapper contextWrapper;
     private static String LOG_TAG = "ServerUpdateJob";
     private FirebaseAuth mAuth;
     private DatabaseReference firebaseDatabase;
+    private StorageReference firebaseStorage;
+    private StorageReference imagePathReference;
+    private String filesDirName;
+    private File filesDir;
+    private Utils utils;
 
     public AlarmService() {
         super("AlarmService");
@@ -59,6 +69,11 @@ public class AlarmService extends IntentService {
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
         Log.d(LOG_TAG, "executing task after sign in");
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance().getReference();
+        context = getApplicationContext();
+        filesDirName = "LOTTR";
+        filesDir = context.getDir(filesDirName, Context.MODE_PRIVATE);
+        utils = new Utils();
 
         firebaseDatabase.child("categories").addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,6 +82,8 @@ public class AlarmService extends IntentService {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     TriviaCategory triviaCategory = snapshot.getValue(TriviaCategory.class);
                     options.add(triviaCategory);
+                    imagePathReference = firebaseStorage.child(triviaCategory.imagePath);
+                    utils.saveFileFromFirebase(context, imagePathReference, triviaCategory.imagePath);
                 }
             }
 
