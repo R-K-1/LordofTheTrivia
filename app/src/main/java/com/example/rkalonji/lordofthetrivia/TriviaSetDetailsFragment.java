@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.R.attr.duration;
-
 /**
  * Created by rkalonji on 05/29/2017.
  */

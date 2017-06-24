@@ -18,10 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import static android.R.attr.id;
 
 /**
  * Created by Rkalonji on 06/14/2017.
@@ -61,11 +64,14 @@ public class AlarmService extends IntentService {
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
         Log.d(LOG_TAG, "executing task after sign in");
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-        firebaseDatabase.child("Trivias").addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.child("options").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object trivias = dataSnapshot.getValue();
-                System.out.println(trivias);
+                ArrayList<Option> options = new ArrayList<Option>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Option option = snapshot.getValue(Option.class);
+                    options.add(option);
+                }
             }
 
             @Override
