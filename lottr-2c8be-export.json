@@ -1,0 +1,213 @@
+{
+  "Trivias" : {
+    "categories" : [ {
+      "id" : 1,
+      "title" : "Music"
+    }, {
+      "id" : 2,
+      "title" : "Movies"
+    }, {
+      "id" : 3,
+      "title" : "People"
+    }, {
+      "id" : 4,
+      "title" : "Congo"
+    } ],
+    "triviaSets" : [ {
+      "categoryId" : 1,
+      "categoryVersion" : 1,
+      "id" : 1,
+      "imagePath" : "path1",
+      "name" : "Congo 1",
+      "questions" : [ {
+        "id" : 1,
+        "options" : [ {
+          "id" : 1,
+          "isAnswer" : false,
+          "questionId" : "1",
+          "text" : "3"
+        }, {
+          "id" : 2,
+          "isAnswer" : true,
+          "questionId" : "1",
+          "text" : "4"
+        }, {
+          "id" : 3,
+          "isAnswer" : false,
+          "questionId" : "1",
+          "text" : "5"
+        }, {
+          "id" : 4,
+          "isAnswer" : false,
+          "questionId" : "1",
+          "text" : "6"
+        } ],
+        "text" : "Le poisson a combien de parties?",
+        "triviaId" : "1"
+      }, {
+        "id" : 2,
+        "options" : [ {
+          "id" : 5,
+          "isAnswer" : false,
+          "questionId" : "2",
+          "text" : "Sur Facebook"
+        }, {
+          "id" : 6,
+          "isAnswer" : false,
+          "questionId" : "2",
+          "text" : "Sur Twitter"
+        }, {
+          "id" : 7,
+          "isAnswer" : true,
+          "questionId" : "2",
+          "text" : "Les charlatan congolais"
+        }, {
+          "id" : 8,
+          "isAnswer" : true,
+          "questionId" : "2",
+          "text" : "Les on-dit"
+        } ],
+        "text" : "Comment GUEGUE a commence?!?",
+        "triviaId" : "1"
+      } ],
+      "version" : 1
+    }, {
+      "categoryId" : 2,
+      "categoryVersion" : 1,
+      "id" : 2,
+      "imagePath" : "path2",
+      "name" : "Cong 2",
+      "questions" : [ {
+        "id" : 3,
+        "options" : [ {
+          "id" : 9,
+          "isAnswer" : true,
+          "questionId" : "3",
+          "text" : "Tango Naye"
+        }, {
+          "id" : 10,
+          "isAnswer" : false,
+          "questionId" : "3",
+          "text" : "Nabimi Molongi"
+        }, {
+          "id" : 11,
+          "isAnswer" : false,
+          "questionId" : "3",
+          "text" : "Molimo"
+        }, {
+          "id" : 12,
+          "isAnswer" : false,
+          "questionId" : "3",
+          "text" : "OzaMosantu"
+        } ],
+        "text" : "Meilleur Chanson Dans Heros de Moise Mbiye?",
+        "triviaId" : "2"
+      }, {
+        "id" : 4,
+        "options" : [ {
+          "id" : 13,
+          "isAnswer" : false,
+          "questionId" : "4",
+          "text" : "Lecrae"
+        }, {
+          "id" : 14,
+          "isAnswer" : true,
+          "questionId" : "4",
+          "text" : "Mike Kalambayi"
+        }, {
+          "id" : 15,
+          "isAnswer" : true,
+          "questionId" : "4",
+          "text" : "Dena Mwana"
+        }, {
+          "id" : 16,
+          "isAnswer" : false,
+          "questionId" : "4",
+          "text" : "Moise Mbiye"
+        } ],
+        "text" : "Qui est le leader de l''adoration a cite Bethel?",
+        "triviaId" : "2"
+      } ],
+      "version" : 1
+    }, {
+      "categoryId" : 2,
+      "categoryVersion" : 1,
+      "id" : 3,
+      "imagePath" : "path3",
+      "name" : "Christian Hip Hop",
+      "questions" : [ {
+        "id" : 5,
+        "options" : [ {
+          "id" : 17,
+          "isAnswer" : true,
+          "questionId" : "5",
+          "text" : "Swoope"
+        }, {
+          "id" : 18,
+          "isAnswer" : false,
+          "questionId" : "5",
+          "text" : "Da Truth"
+        }, {
+          "id" : 19,
+          "isAnswer" : false,
+          "questionId" : "5",
+          "text" : "Lecrae"
+        }, {
+          "id" : 20,
+          "isAnswer" : false,
+          "questionId" : "5",
+          "text" : "Flame"
+        } ],
+        "text" : "Who is the main singer in the album Wake-up",
+        "triviaId" : "3"
+      }, {
+        "id" : 6,
+        "options" : [ {
+          "id" : 21,
+          "isAnswer" : false,
+          "questionId" : "6",
+          "text" : "Swoope"
+        }, {
+          "id" : 22,
+          "isAnswer" : true,
+          "questionId" : "6",
+          "text" : "Trip Lee"
+        }, {
+          "id" : 23,
+          "isAnswer" : false,
+          "questionId" : "6",
+          "text" : "Dena Mwana"
+        }, {
+          "id" : 24,
+          "isAnswer" : true,
+          "questionId" : "6",
+          "text" : "JPaul"
+        } ],
+        "text" : "Who sang Fallin?",
+        "triviaId" : "3"
+      } ],
+      "version" : 1
+    } ]
+  },
+  "scores" : [ {
+    "name" : "user1",
+    "score" : 90,
+    "triviaSetId" : 1
+  }, {
+    "name" : "user3",
+    "score" : 70,
+    "triviaSetId" : 2
+  }, {
+    "name" : "user1",
+    "score" : 88,
+    "triviaSetId" : 2
+  }, {
+    "name" : "user2",
+    "score" : 45,
+    "triviaSetId" : 3
+  }, {
+    "name" : "user3",
+    "score" : 70.5,
+    "triviaSetId" : 3
+  } ]
+}
