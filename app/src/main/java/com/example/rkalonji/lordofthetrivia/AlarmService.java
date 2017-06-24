@@ -12,8 +12,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Rkalonji on 06/14/2017.
@@ -23,6 +31,7 @@ public class AlarmService extends IntentService {
     private Context context;
     private static String LOG_TAG = "ServerUpdateJob";
     private FirebaseAuth mAuth;
+    private DatabaseReference firebaseDatabase;
 
     public AlarmService() {
         super("AlarmService");
@@ -30,12 +39,7 @@ public class AlarmService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Executor executor = new Executor() {
-            @Override
-            public void execute(@NonNull Runnable command) {
-
-            }
-        };
+        Executor executor = Executors.newSingleThreadExecutor();
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInAnonymously()
                 .addOnCompleteListener(executor, new OnCompleteListener<AuthResult>() {
@@ -56,5 +60,19 @@ public class AlarmService extends IntentService {
 
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
         Log.d(LOG_TAG, "executing task after sign in");
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseDatabase.child("Trivias").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object trivias = dataSnapshot.getValue();
+                System.out.println(trivias);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        Log.d(LOG_TAG, "got trivia");
     }
 }
