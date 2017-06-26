@@ -68,7 +68,7 @@ public class TriviasProvider extends ContentProvider {
     public static final String OPTIONS_BASE = "content://" + PROVIDER_NAME + "/options";
     public static final Uri OPTIONS_BASE_URI = Uri.parse(OPTIONS_BASE);
     public static final String GET_OPTIONS_URI = BASE + "/options/";
-    public static final Uri INSERT_CATEGORIES_URI = Uri.parse(BASE + "/categories");
+    public static final Uri CATEGORIES_BASE_URI = Uri.parse(BASE + "/categories");
 
 
 
@@ -79,6 +79,7 @@ public class TriviasProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "trivias/#", TRIVIA_ID);
         uriMatcher.addURI(PROVIDER_NAME, "questions/#", QUESTIONS_TRIVIA_ID);
         uriMatcher.addURI(PROVIDER_NAME, "options/#", OPTIONS_QUESTION_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "categories", CATEGORIES);
 
     }
 
@@ -261,6 +262,11 @@ public class TriviasProvider extends ContentProvider {
             case OPTIONS_QUESTION_ID:
                 qb.setTables(OPTION_TABLE_NAME);
                 qb.appendWhere( QUESTION_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            case CATEGORIES:
+                qb.setTables(CATEGORY_TABLE_NAME);
+                qb.setProjectionMap(CATEGORIES_PROJECTION_MAP);
                 break;
         }
 
