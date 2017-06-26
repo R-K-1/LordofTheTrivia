@@ -110,11 +110,8 @@ public class AlarmService extends IntentService {
                         do {
                             if (triviaCategory.version != c.getInt(c.getColumnIndex(triviasProvider.VERSION))) {
                                 saveImage = true;
-                                query = triviasProvider.returnUpdateCategoryStatement(triviaCategory.firebaseId,
-                                        triviaCategory.imagePath, triviaCategory.name, triviaCategory.version);
 
                                 utils.deleteImageFromInternalStorage(context, c.getString(c.getColumnIndex(triviasProvider.IMAGE_PATH)));
-                                // db.rawQuery(query, null);
                                 String whereClause = triviasProvider.FIREBASE_ID + "=" + triviaCategory.firebaseId;
                                 db.update(triviasProvider.CATEGORY_TABLE_NAME, triviaCategoryValues, whereClause, null);
                             }
@@ -221,10 +218,49 @@ public class AlarmService extends IntentService {
         firebaseDatabase.child("questions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Question> questions = new ArrayList<Question>();
+                String query = "";
+                ContentValues questionValues = new ContentValues();
+
+                // This will be used to find all categories that need to be deleted
+                String idsQuestionsToKeep = "(";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Question question = snapshot.getValue(Question.class);
-                    questions.add(question);
+
+                    idsQuestionsToKeep += question.firebaseId + ",";
+
+                    questionValues.clear();
+                    questionValues.put(triviasProvider.FIREBASE_ID, question.firebaseId);
+                    questionValues.put(triviasProvider.VERSION, question.version);
+                    questionValues.put(triviasProvider.TRIVIA_SET_FIREBASE_ID, question.triviaSetFirebaseId);
+                    questionValues.put(triviasProvider.TEXT, question.text);
+
+                    boolean saveImage = false;
+
+                    Cursor c = db.rawQuery(triviasProvider.returnSelectOneItemStatement(
+                            question.firebaseId, triviasProvider.QUESTION_TABLE_NAME, true, false), null);
+                    if (c != null && c.moveToFirst()) {
+                        do {
+                            if (question.version != c.getInt(c.getColumnIndex(triviasProvider.VERSION))) {
+                                String whereClause = triviasProvider.FIREBASE_ID + "=" + question.firebaseId;
+                                db.update(triviasProvider.QUESTION_TABLE_NAME, questionValues, whereClause, null);
+                            }
+
+                        } while (c.moveToNext());
+                    } else {
+                        db.insert(triviasProvider.QUESTION_TABLE_NAME, "", questionValues);
+                    }
+                }
+                // removing the last comma and clausing the parenthesis
+                idsQuestionsToKeep = idsQuestionsToKeep.substring(0, idsQuestionsToKeep.length() - 1) + ")";
+
+                query = triviasProvider.returnSelectItemsToDeleteStatement(idsQuestionsToKeep,
+                        triviasProvider.QUESTION_TABLE_NAME, false);
+                Cursor c = db.rawQuery(query, null);
+                if (c != null && c.moveToFirst()) {
+                    do {
+                        String where = triviasProvider._ID + "=" + c.getInt(c.getColumnIndex(triviasProvider._ID));
+                        db.delete(triviasProvider.QUESTION_TABLE_NAME, where, null);
+                    } while (c.moveToNext());
                 }
             }
 

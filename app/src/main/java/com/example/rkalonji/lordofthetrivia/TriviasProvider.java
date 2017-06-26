@@ -87,7 +87,7 @@ public class TriviasProvider extends ContentProvider {
      */
     private SQLiteDatabase db;
     public static final String DATABASE_NAME = "Trivias.db";
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
 
     // Tables definition and creation
     public static final String TRIVIA_SET_TABLE_NAME = "trivia_set";
@@ -106,6 +106,7 @@ public class TriviasProvider extends ContentProvider {
             " CREATE TABLE IF NOT EXISTS " + QUESTION_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + VERSION + " INTEGER NOT NULL, " +
                     " " + TRIVIA_SET_FIREBASE_ID + " INTEGER NOT NULL, " +
                     " " + TEXT + " TEXT NOT NULL);";
 
@@ -135,20 +136,6 @@ public class TriviasProvider extends ContentProvider {
                     " " + NAME + " TEXT NOT NULL, " +
                     " " + VERSION + " INTEGER NOT NULL);";
 
-    public String returnInsertCategoryStatement (int firebaseId, String imagePath, String name,
-                                                int version) {
-        return ("INSERT INTO " + CATEGORY_TABLE_NAME + " (" + FIREBASE_ID + "," + IMAGE_PATH +
-                    "," + NAME + "," + VERSION + ")" + " VALUES" + " (" + firebaseId + ",'" +
-                    imagePath + "','" + name + "'," + version + ");");
-    }
-
-    public String returnUpdateCategoryStatement(int firebaseId,  String imagePath, String name,
-                                                 int version) {
-        return ("UPDATE " + CATEGORY_TABLE_NAME + " SET " + IMAGE_PATH + "='" + imagePath + "'," +
-                    NAME + "='" + name + "'," + VERSION  + "=" + version + " WHERE " +
-                    FIREBASE_ID + "=" + firebaseId + ";");
-    }
-
     public String returnSelectOneItemStatement(int itemFirebaseId, String tableName, boolean includeVersion, boolean includeImagePath) {
         String query = "";
         if (includeVersion && includeImagePath) {
@@ -174,10 +161,6 @@ public class TriviasProvider extends ContentProvider {
         }
 
         return query;
-    }
-
-    public String returnDeleteItemsStatement(String firebaseIdsToIgnore, String tableName) {
-        return ("DELETE FROM " + tableName + " WHERE " + FIREBASE_ID + " NOT IN " + firebaseIdsToIgnore + ";");
     }
 
     /**

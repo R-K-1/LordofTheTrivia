@@ -14,16 +14,18 @@ public class Question {
     public String text;
     public int triviaSetFirebaseId;
     public String mQuestionOptions;
+    public int version;
 
     public Question() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
     // This constructor is used whenever questions are retrieved from Firebase
-    public Question(int firebaseId, String text, int triviaSetFirebaseId) {
+    public Question(int firebaseId, String text, int triviaSetFirebaseId, int version) {
         this.firebaseId = firebaseId;
         this.text = text;
         this.triviaSetFirebaseId = triviaSetFirebaseId;
+        this.version = version;
     }
 
     // this constructor is uses whenever questions are retrieved from SQLite
@@ -54,6 +56,7 @@ public class Question {
         result.put("firebaseId", firebaseId);
         result.put("text", text);
         result.put("triviaSetFirebaseId", triviaSetFirebaseId);
+        result.put("version", version);
 
         return result;
     }
