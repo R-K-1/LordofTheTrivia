@@ -79,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
+            case R.id.nav_categories:
+                fragmentClass = TriviaCategoriesGridFragment.class;
+                break;
+            case R.id.nav_all_trivias:
                 fragmentClass = TriviaSetsGridFragment.class;
                 break;
-            case R.id.nav_second_fragment:
-                fragmentClass = TriviaSetsGridFragment.class;
-                break;
-            case R.id.nav_third_fragment:
-                fragmentClass = TriviaSetsGridFragment.class;
+            case R.id.nav_scores:
+                fragmentClass = ScoresGridFragment.class;
                 break;
             default:
                 fragmentClass = TriviaSetsGridFragment.class;

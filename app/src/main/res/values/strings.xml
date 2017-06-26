@@ -8,10 +8,15 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="navigation_drawer_list_trivia">list trivia sets</string>
+    <string name="navigation_drawer_trivias_subgroup">Trivias</string>
+    <string name="navigation_drawer_scores_subgroup">Scores</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_launch_test_activity">Test act.</string>
     <string name="action_launch_contacts_fragments">Contacts</string>
+    <string name="action_list_categories">Categories</string>
+    <string name="action_list_all_trivias">All trivias</string>
+    <string name="action_list_scores">Best scores</string>
 
     <string name="submit_trivia">Get Score</string>
     <string name="reset_trivia">Reset</string>

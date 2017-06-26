@@ -58,6 +58,7 @@ public class TriviasProvider extends ContentProvider {
     public static final int QUESTIONS_TRIVIA_ID = 3;
     public static final int OPTIONS_QUESTION_ID = 4;
     public static final int CATEGORIES = 5;
+    public static final int SCORES = 6;
 
     public static final String BASE = "content://" + PROVIDER_NAME;
     public static final String TRIVIAS_BASE = "content://" + PROVIDER_NAME + "/trivias";
@@ -69,6 +70,7 @@ public class TriviasProvider extends ContentProvider {
     public static final Uri OPTIONS_BASE_URI = Uri.parse(OPTIONS_BASE);
     public static final String GET_OPTIONS_URI = BASE + "/options/";
     public static final Uri CATEGORIES_BASE_URI = Uri.parse(BASE + "/categories");
+    public static final Uri SCORES_BASE_URI = Uri.parse(BASE + "/scores");
 
 
 
@@ -80,6 +82,7 @@ public class TriviasProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "questions/#", QUESTIONS_TRIVIA_ID);
         uriMatcher.addURI(PROVIDER_NAME, "options/#", OPTIONS_QUESTION_ID);
         uriMatcher.addURI(PROVIDER_NAME, "categories", CATEGORIES);
+        uriMatcher.addURI(PROVIDER_NAME, "scores", SCORES);
 
     }
 
@@ -265,6 +268,11 @@ public class TriviasProvider extends ContentProvider {
                 break;
 
             case CATEGORIES:
+                qb.setTables(CATEGORY_TABLE_NAME);
+                qb.setProjectionMap(CATEGORIES_PROJECTION_MAP);
+                break;
+
+            case SCORES:
                 qb.setTables(CATEGORY_TABLE_NAME);
                 qb.setProjectionMap(CATEGORIES_PROJECTION_MAP);
                 break;
