@@ -1,9 +1,9 @@
 package com.example.rkalonji.lordofthetrivia;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
@@ -11,7 +11,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
@@ -60,10 +59,20 @@ public class Utils {
         });
     }
 
-    public File getFileFromInternalStorage (Context context, String imageDir, String filePath) {
+    public File getFileFromInternalStorage (Context context, String filePath) {
         File directory = context.getDir(filesDirName, Context.MODE_PRIVATE);
         File file = new File(directory, filePath);
 
         return file;
+    }
+
+    public void deleteImageFromInternalStorage (Context context, String filePath) {
+        File directory = context.getDir(filesDirName, Context.MODE_PRIVATE);
+        File file = new File(directory, filePath);
+        if (file.delete()) {
+            Log.i("file", "deleted " + filePath);
+        } else {
+            Log.i("file", "could not delete " + filePath);
+        }
     }
 }

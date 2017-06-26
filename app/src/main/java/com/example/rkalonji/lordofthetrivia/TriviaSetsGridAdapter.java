@@ -2,13 +2,11 @@ package com.example.rkalonji.lordofthetrivia;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.stetho.common.Util;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -34,7 +32,8 @@ public class TriviaSetsGridAdapter extends SimpleCursorAdapter {
         titleText.setText(content);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.trivia_set_image);
-        File imageFile = utils.getFileFromInternalStorage(context, "", "LOTTRImgCatCongo.jpg");
+        String imagePath = cursor.getString(cursor.getColumnIndex(TriviasProvider.IMAGE_PATH));
+        File imageFile = utils.getFileFromInternalStorage(context, imagePath);
         Picasso.with(context).load(imageFile).into(imageView);
     }
 }

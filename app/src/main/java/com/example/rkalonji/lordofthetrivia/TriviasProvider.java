@@ -55,6 +55,7 @@ public class TriviasProvider extends ContentProvider {
     public static final int TRIVIA_ID = 2;
     public static final int QUESTIONS_TRIVIA_ID = 3;
     public static final int OPTIONS_QUESTION_ID = 4;
+    public static final int CATEGORIES = 5;
 
     public static final String BASE = "content://" + PROVIDER_NAME;
     public static final String TRIVIAS_BASE = "content://" + PROVIDER_NAME + "/trivias";
@@ -65,6 +66,8 @@ public class TriviasProvider extends ContentProvider {
     public static final String OPTIONS_BASE = "content://" + PROVIDER_NAME + "/options";
     public static final Uri OPTIONS_BASE_URI = Uri.parse(OPTIONS_BASE);
     public static final String GET_OPTIONS_URI = BASE + "/options/";
+    public static final Uri INSERT_CATEGORIES_URI = Uri.parse(BASE + "/categories");
+
 
 
     static final UriMatcher uriMatcher;
@@ -129,6 +132,51 @@ public class TriviasProvider extends ContentProvider {
                     " " + NAME + " TEXT NOT NULL, " +
                     " " + VERSION + " INTEGER NOT NULL);";
 
+    public String returnInsertCategoryStatement (int firebaseId, String imagePath, String name,
+                                                int version) {
+        return ("INSERT INTO " + CATEGORY_TABLE_NAME + " (" + FIREBASE_ID + "," + IMAGE_PATH +
+                    "," + NAME + "," + VERSION + ")" + " VALUES" + " (" + firebaseId + ",'" +
+                    imagePath + "','" + name + "'," + version + ");");
+    }
+
+    public String returnUpdateCategoryStatement(int firebaseId,  String imagePath, String name,
+                                                 int version) {
+        return ("UPDATE " + CATEGORY_TABLE_NAME + " SET " + IMAGE_PATH + "='" + imagePath + "'," +
+                    NAME + "='" + name + "'," + VERSION  + "=" + version + " WHERE " +
+                    FIREBASE_ID + "=" + firebaseId + ";");
+    }
+
+    public String returnSelectOneItemStatement(int itemFirebaseId, String tableName, boolean includeVersion, boolean includeImagePath) {
+        String query = "";
+        if (includeVersion && includeImagePath) {
+            query = "SELECT " + _ID + "," + VERSION + "," + IMAGE_PATH + " FROM " + tableName + " WHERE " + FIREBASE_ID + "=" + itemFirebaseId + ";";
+        } else if (includeVersion && !includeImagePath) {
+            query = "SELECT " + _ID + "," + VERSION + " FROM " + tableName + " WHERE " + FIREBASE_ID + "=" + itemFirebaseId + ";";
+        } else if (!includeVersion && includeImagePath) {
+            query = "SELECT " + _ID + "," + IMAGE_PATH + " FROM " + tableName + " WHERE " + FIREBASE_ID + "=" + itemFirebaseId + ";";
+        } else {
+            query = "SELECT " + _ID + " FROM " + tableName + " WHERE " + FIREBASE_ID + "=" + itemFirebaseId + ";";
+        }
+
+        return query;
+    }
+
+    public String returnSelectItemsToDeleteStatement(String firebaseIdsToIgnore, String tableName,
+                                                boolean includeImagePath) {
+        String query = "";
+        if (includeImagePath) {
+            query = "SELECT " + _ID + "," + IMAGE_PATH + " FROM " + tableName + " WHERE " + FIREBASE_ID + " NOT IN " + firebaseIdsToIgnore + ";";
+        } else {
+            query = "SELECT " + _ID +  " FROM " + tableName + " WHERE " + FIREBASE_ID + " NOT IN " + firebaseIdsToIgnore + ";";
+        }
+
+        return query;
+    }
+
+    public String returnDeleteItemsStatement(String firebaseIdsToIgnore, String tableName) {
+        return ("DELETE FROM " + tableName + " WHERE " + FIREBASE_ID + " NOT IN " + firebaseIdsToIgnore + ";");
+    }
+
     /**
      * Helper class that actually creates and manages
      * the provider's underlying data repository.
@@ -184,6 +232,10 @@ public class TriviasProvider extends ContentProvider {
         switch (uriMatcher.match(uri)) {
             case TRIVIAS:
                 rowID = db.insert(TRIVIA_SET_TABLE_NAME, "", values);
+                break;
+
+            case CATEGORIES:
+                rowID = db.insert( CATEGORY_TABLE_NAME, "", values);
                 break;
         }
         /**
@@ -249,6 +301,10 @@ public class TriviasProvider extends ContentProvider {
                 count = db.delete(TRIVIA_SET_TABLE_NAME, selection, selectionArgs);
                 break;
 
+            case CATEGORIES:
+                count = db.delete(CATEGORY_TABLE_NAME, selection, selectionArgs);
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
@@ -263,6 +319,10 @@ public class TriviasProvider extends ContentProvider {
         int count = 0;
         switch (uriMatcher.match(uri)) {
             case TRIVIAS:
+                count = db.update(TRIVIA_SET_TABLE_NAME, values, selection, selectionArgs);
+                break;
+
+            case CATEGORIES:
                 count = db.update(TRIVIA_SET_TABLE_NAME, values, selection, selectionArgs);
                 break;
 

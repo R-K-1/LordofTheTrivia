@@ -5,25 +5,25 @@
         <item
             android:id="@+id/nav_first_fragment"
             android:icon="@drawable/ic_menu_camera"
-            android:title="First" />
+            android:name="First" />
         <item
             android:id="@+id/nav_second_fragment"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Second" />
+            android:name="Second" />
         <item
             android:id="@+id/nav_third_fragment"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Third" />
+            android:name="Third" />
 
-        <item android:title="Sub items">
+        <item android:name="Sub items">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
                         android:icon="@drawable/ic_menu_manage"
-                        android:title="Sub item 1" />
+                        android:name="Sub item 1" />
                     <item
                         android:icon="@drawable/ic_menu_share"
-                        android:title="Sub item 2" />
+                        android:name="Sub item 2" />
                 </group>
             </menu>
         </item>
