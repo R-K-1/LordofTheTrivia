@@ -21,32 +21,35 @@ import java.util.HashMap;
 public class TriviasProvider extends ContentProvider {
     public static final String PROVIDER_NAME = "com.example.rkalonji.lordofthetrivia";
 
-    // trivia_set table unique columns
+    // common columns and foreign keys
     public static final String _ID = "_id";
-    public static final String TRIVIA_SET_FIREBASE_ID = "triviaSetfirebaseId";
-    public static final String NAME = "name";
+    public static final String FIREBASE_ID = "firebaseId";
+    public static final String CATEGORY_FIREBASE_ID = "categoryFirebaseId";
+    public static final String TRIVIA_SET_FIREBASE_ID = "triviaSetFirebaseId";
+    public static final String QUESTION_FIREBASE_ID = "questionFirebaseId";
     public static final String IMAGE_PATH = "imagePath";
-    public static final int POSITION_ID = 0;
-    public static final int POSITION_FIREBASE_ID = 1;
-    public static final int POSITION_NAME = 2;
-    public static final int POSITION_IMAGE_PATH = 3;
+    public static final String NAME = "name";
+    public static final String VERSION = "version";
+    public static final String TEXT = "text";
+
+    // trivia_set table unique columns
 
     // option table unique columns
-    public static final String TEXT = "text";
     public static final String IS_ANSWER = "isAnswer";
-    public static final String FK_QUESTION_FIREBASE_ID = "FKQuestionFirebaseId";
 
-    // best_score table unique columns
+    // score table unique columns
     public static final String USERNAME = "username";
-    public static final String FK_TRIVIA_SET_FIREBASE_ID = "FKTriviaSetFirebaseId";
     public static final String SCORE = "score";
-    public static final String TIMESTAMP = "timestamp";
-    public static final String IS_REMOTE = "isRemote";
-    public static final String IS_SHARED = "isShared";
+
+    // question table unique columns
+
+    // category table unique columns
 
     private static HashMap<String, String> TRIVIA_SETS_PROJECTION_MAP;
-    private static HashMap<String, String> QUESTION_SETS_PROJECTION_MAP;
-    private static HashMap<String, String> OPTION_SETS_PROJECTION_MAP;
+    private static HashMap<String, String> QUESTIONS_PROJECTION_MAP;
+    private static HashMap<String, String> OPTIONS_PROJECTION_MAP;
+    private static HashMap<String, String> CATEGORIES_PROJECTION_MAP;
+    private static HashMap<String, String> SCORES_PROJECTION_MAP;
 
     public static final int TRIVIAS = 1;
     public static final int TRIVIA_ID = 2;
@@ -79,14 +82,16 @@ public class TriviasProvider extends ContentProvider {
      */
     private SQLiteDatabase db;
     public static final String DATABASE_NAME = "Trivias.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
 
     // Tables definition and creation
     public static final String TRIVIA_SET_TABLE_NAME = "trivia_set";
     public static final String CREATE_TRIVIA_SET_DB_TABLE =
             " CREATE TABLE IF NOT EXISTS " + TRIVIA_SET_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " " + TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
+                    " " + FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + CATEGORY_FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + VERSION + " INTEGER NOT NULL, " +
                     " " + NAME + " TEXT NOT NULL, " +
                     " " + IMAGE_PATH + " TEXT);";
 
@@ -94,27 +99,35 @@ public class TriviasProvider extends ContentProvider {
     public static final String CREATE_QUESTION_DB_TABLE =
             " CREATE TABLE IF NOT EXISTS " + QUESTION_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " " + TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
+                    " " + FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + TRIVIA_SET_FIREBASE_ID + " INTEGER NOT NULL, " +
                     " " + TEXT + " TEXT NOT NULL);";
 
     public static final String OPTION_TABLE_NAME = "option";
     public static final String CREATE_OPTION_DB_TABLE =
             " CREATE TABLE IF NOT EXISTS " + OPTION_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    " " + FIREBASE_ID + " INTEGER NOT NULL, " +
                     " " + TEXT + " TEXT NOT NULL, " +
                     " " + IS_ANSWER + " INTEGER NOT NULL, " +
-                    " " + FK_QUESTION_FIREBASE_ID + " TEXT);";
+                    " " + QUESTION_FIREBASE_ID + " INTEGER NOT NULL);";
 
     public static final String BEST_SCORE_TABLE_NAME = "best_score";
     public static final String CREATE_BEST_SCORE_DB_TABLE =
             " CREATE TABLE IF NOT EXISTS " + BEST_SCORE_TABLE_NAME +
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + USERNAME + " TEXT NOT NULL, " +
-                    " " + FK_TRIVIA_SET_FIREBASE_ID + " TEXT NOT NULL, " +
-                    " " + SCORE + " TEXT NOT NULL, " +
-                    " " + TIMESTAMP + " TEXT NOT NULL, " +
-                    " " + IS_REMOTE + " INTEGER NOT NULL, " +
-                    " " + IS_SHARED + " INTEGER NOT NULL);";
+                    " " + TRIVIA_SET_FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + SCORE + " INTEGER NOT NULL);";
+
+    public static final String CATEGORY_TABLE_NAME = "category";
+    public static final String CREATE_CATEGORY_DB_TABLE =
+            " CREATE TABLE IF NOT EXISTS " + CATEGORY_TABLE_NAME +
+                    " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    " " + FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + IMAGE_PATH + " TEXT NOT NULL, " +
+                    " " + NAME + " TEXT NOT NULL, " +
+                    " " + VERSION + " INTEGER NOT NULL);";
 
     /**
      * Helper class that actually creates and manages
@@ -128,7 +141,7 @@ public class TriviasProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
+            db.execSQL(CREATE_CATEGORY_DB_TABLE);
             db.execSQL(CREATE_TRIVIA_SET_DB_TABLE);
             db.execSQL(CREATE_QUESTION_DB_TABLE);
             db.execSQL(CREATE_OPTION_DB_TABLE);
@@ -141,6 +154,7 @@ public class TriviasProvider extends ContentProvider {
             db.execSQL("DROP TABLE IF EXISTS " + OPTION_TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + QUESTION_TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + TRIVIA_SET_TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE_NAME);
             onCreate(db);
         }
     }
@@ -207,7 +221,7 @@ public class TriviasProvider extends ContentProvider {
 
             case OPTIONS_QUESTION_ID:
                 qb.setTables(OPTION_TABLE_NAME);
-                qb.appendWhere( FK_QUESTION_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
+                qb.appendWhere( QUESTION_FIREBASE_ID + "=" + uri.getPathSegments().get(1));
                 break;
         }
 
