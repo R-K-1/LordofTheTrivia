@@ -15,16 +15,18 @@ public class Option {
     public boolean isAnswer;
     public int questionFirebaseId;
     public String text;
+    public int version;
 
     public Option() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Option(int firebaseId, boolean isAnswer, int questionFirebaseId, String text) {
+    public Option(int firebaseId, boolean isAnswer, int questionFirebaseId, String text, int version) {
         this.firebaseId = firebaseId;
         this.isAnswer = isAnswer;
         this.questionFirebaseId = questionFirebaseId;
         this.text = text;
+        this.version = version;
     }
 
     @Exclude
@@ -34,6 +36,7 @@ public class Option {
         result.put("isAnswer", isAnswer);
         result.put("questionFirebaseId", questionFirebaseId);
         result.put("text", text);
+        result.put("version", version);
 
         return result;
     }

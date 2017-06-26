@@ -87,7 +87,7 @@ public class TriviasProvider extends ContentProvider {
      */
     private SQLiteDatabase db;
     public static final String DATABASE_NAME = "Trivias.db";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
 
     // Tables definition and creation
     public static final String TRIVIA_SET_TABLE_NAME = "trivia_set";
@@ -117,6 +117,7 @@ public class TriviasProvider extends ContentProvider {
                     " " + FIREBASE_ID + " INTEGER NOT NULL, " +
                     " " + TEXT + " TEXT NOT NULL, " +
                     " " + IS_ANSWER + " INTEGER NOT NULL, " +
+                    " " + VERSION + " INTEGER NOT NULL, " +
                     " " + QUESTION_FIREBASE_ID + " INTEGER NOT NULL);";
 
     public static final String BEST_SCORE_TABLE_NAME = "best_score";

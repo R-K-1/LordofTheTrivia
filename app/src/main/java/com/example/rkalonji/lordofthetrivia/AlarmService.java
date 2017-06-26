@@ -52,33 +52,37 @@ public class AlarmService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Executor executor = Executors.newSingleThreadExecutor();
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(executor, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(LOG_TAG, "signInAnonymously:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            retrieveServerUpdate(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(LOG_TAG, "signInAnonymously:failure", task.getException());
+        context = getApplicationContext();
+        utils = new Utils();
+        if (utils.networkUp(context)) {
+            Executor executor = Executors.newSingleThreadExecutor();
+            mAuth = FirebaseAuth.getInstance();
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(executor, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(LOG_TAG, "signInAnonymously:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                retrieveServerUpdate(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(LOG_TAG, "signInAnonymously:failure", task.getException());
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            Log.w(LOG_TAG, "Cannot retrieve updates not network connection");
+        }
     }
 
     private void retrieveServerUpdate (FirebaseUser firebaseUser) {
         Log.d(LOG_TAG, "executing task after sign in");
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
-        context = getApplicationContext();
         filesDirName = "LOTTR";
         filesDir = context.getDir(filesDirName, Context.MODE_PRIVATE);
-        utils = new Utils();
         db = utils.returnWritableDatabase(getApplicationContext());
         triviasProvider = new TriviasProvider();
         final String[] categoriesToKeep = new String[1];
@@ -266,39 +270,87 @@ public class AlarmService extends IntentService {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+                System.out.println("The questions read failed: " + databaseError.getCode());
             }
         });
 
         firebaseDatabase.child("options").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Option> options = new ArrayList<Option>();
+                String query = "";
+                ContentValues optionValues = new ContentValues();
+
+                // This will be used to find all categories that need to be deleted
+                String optionsToKeep = "(";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Option option = snapshot.getValue(Option.class);
-                    options.add(option);
+
+                    optionsToKeep += option.firebaseId + ",";
+
+                    optionValues.clear();
+                    optionValues.put(triviasProvider.FIREBASE_ID, option.firebaseId);
+                    optionValues.put(triviasProvider.TEXT, option.text);
+                    optionValues.put(triviasProvider.IS_ANSWER, option.isAnswer);
+                    optionValues.put(triviasProvider.QUESTION_FIREBASE_ID, option.questionFirebaseId);
+                    optionValues.put(triviasProvider.VERSION, option.version);
+
+                    Cursor c = db.rawQuery(triviasProvider.returnSelectOneItemStatement(
+                            option.firebaseId, triviasProvider.OPTION_TABLE_NAME, true, false), null);
+                    if (c != null && c.moveToFirst()) {
+                        do {
+                            if (option.version != c.getInt(c.getColumnIndex(triviasProvider.VERSION))) {
+                                String whereClause = triviasProvider.FIREBASE_ID + "=" + option.firebaseId;
+                                db.update(triviasProvider.OPTION_TABLE_NAME, optionValues, whereClause, null);
+                            }
+                        } while (c.moveToNext());
+                    } else {
+                        db.insert(triviasProvider.OPTION_TABLE_NAME, "", optionValues);
+                    }
+                }
+                // removing the last comma and clausing the parenthesis
+                optionsToKeep = optionsToKeep.substring(0, optionsToKeep.length() - 1) + ")";
+
+                query = triviasProvider.returnSelectItemsToDeleteStatement(optionsToKeep,
+                        triviasProvider.OPTION_TABLE_NAME, false);
+                Cursor c = db.rawQuery(query, null);
+                if (c != null && c.moveToFirst()) {
+                    do {
+                        String where = triviasProvider._ID + "=" + c.getInt(c.getColumnIndex(triviasProvider._ID));
+                        db.delete(triviasProvider.OPTION_TABLE_NAME, where, null);
+                    } while (c.moveToNext());
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+                System.out.println("The options read failed: " + databaseError.getCode());
             }
         });
 
         firebaseDatabase.child("scores").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Score> scores = new ArrayList<Score>();
+                db.delete(triviasProvider.BEST_SCORE_TABLE_NAME, null, null);
+
+                ContentValues scoreValues = new ContentValues();
+
+                // This will be used to find all categories that need to be deleted
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Score score = snapshot.getValue(Score.class);
-                    scores.add(score);
+
+                    scoreValues.clear();
+                    scoreValues.put(triviasProvider.USERNAME, score.username);
+                    scoreValues.put(triviasProvider.TRIVIA_SET_FIREBASE_ID, score.triviaSetFirebaseId);
+                    scoreValues.put(triviasProvider.SCORE, score.score);
+
+                    db.insert(triviasProvider.BEST_SCORE_TABLE_NAME, "", scoreValues);
                 }
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+                System.out.println("The scores read failed: " + databaseError.getCode());
             }
         });
     }

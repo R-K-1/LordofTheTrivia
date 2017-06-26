@@ -2,6 +2,8 @@ package com.example.rkalonji.lordofthetrivia;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -74,5 +76,12 @@ public class Utils {
         } else {
             Log.i("file", "could not delete " + filePath);
         }
+    }
+
+    public boolean networkUp(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
