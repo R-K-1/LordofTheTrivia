@@ -16,6 +16,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.util.Random;
 
 import static android.R.attr.y;
 
@@ -83,5 +84,11 @@ public class Utils {
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
+    public int getRandomInt(int minimum, int maximum) {
+        Random rand = new Random();
+
+        return rand.nextInt(maximum) + minimum;
     }
 }
