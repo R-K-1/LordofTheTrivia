@@ -28,7 +28,7 @@ public class TriviaSetsGridAdapter extends SimpleCursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         String content = cursor.getString(cursor.getColumnIndex(TriviasProvider.NAME));
         TextView titleText = (TextView) view.findViewById(android.R.id.text1);
-        String triviaFirebaseId = cursor.getString(cursor.getColumnIndex(TriviasProvider.TRIVIA_SET_FIREBASE_ID));
+        String triviaFirebaseId = cursor.getString(cursor.getColumnIndex(TriviasProvider.FIREBASE_ID));
         titleText.setText(content);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.trivia_set_image);

@@ -86,7 +86,6 @@ public class AlarmService extends IntentService {
         firebaseDatabase.child("categories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<TriviaCategory> options = new ArrayList<TriviaCategory>();
                 String query = "";
                 ContentValues triviaCategoryValues = new ContentValues();
 
@@ -102,8 +101,6 @@ public class AlarmService extends IntentService {
                     triviaCategoryValues.put(triviasProvider.IMAGE_PATH, triviaCategory.imagePath);
                     triviaCategoryValues.put(triviasProvider.NAME, triviaCategory.name);
                     triviaCategoryValues.put(triviasProvider.VERSION, triviaCategory.version);
-
-                    options.add(triviaCategory);
 
                     boolean saveImage = false;
 
@@ -150,23 +147,74 @@ public class AlarmService extends IntentService {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+                System.out.println("The categories read failed: " + databaseError.getCode());
             }
         });
 
         firebaseDatabase.child("triviaSets").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<TriviaSet> triviaSets = new ArrayList<TriviaSet>();
+                String query = "";
+                ContentValues triviaSetValues = new ContentValues();
+
+                // This will be used to find all categories that need to be deleted
+                String idsTriviaSetsToKeep = "(";
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     TriviaSet triviaSet = snapshot.getValue(TriviaSet.class);
-                    triviaSets.add(triviaSet);
+
+                    idsTriviaSetsToKeep += triviaSet.firebaseId + ",";
+
+                    triviaSetValues.clear();
+                    triviaSetValues.put(triviasProvider.CATEGORY_FIREBASE_ID, triviaSet.categoryFirebaseId);
+                    triviaSetValues.put(triviasProvider.CATEGORY_VERSION, triviaSet.categoryVersion);
+                    triviaSetValues.put(triviasProvider.IMAGE_PATH, triviaSet.imagePath);
+                    triviaSetValues.put(triviasProvider.NAME, triviaSet.name);
+                    triviaSetValues.put(triviasProvider.VERSION, triviaSet.version);
+                    triviaSetValues.put(triviasProvider.FIREBASE_ID, triviaSet.firebaseId);
+
+                    boolean saveImage = false;
+
+                    Cursor c = db.rawQuery(triviasProvider.returnSelectOneItemStatement(
+                            triviaSet.firebaseId, triviasProvider.TRIVIA_SET_TABLE_NAME, true, true), null);
+                    if (c != null && c.moveToFirst()) {
+                        do {
+                            if (triviaSet.version != c.getInt(c.getColumnIndex(triviasProvider.VERSION))) {
+                                saveImage = true;
+
+                                utils.deleteImageFromInternalStorage(context, c.getString(c.getColumnIndex(triviasProvider.IMAGE_PATH)));
+                                String whereClause = triviasProvider.FIREBASE_ID + "=" + triviaSet.firebaseId;
+                                db.update(triviasProvider.TRIVIA_SET_TABLE_NAME, triviaSetValues, whereClause, null);
+                            }
+
+                        } while (c.moveToNext());
+                    } else {
+                        saveImage = true;
+                        db.insert(triviasProvider.TRIVIA_SET_TABLE_NAME, "", triviaSetValues);
+                    }
+
+                    if (saveImage ) {
+                        imagePathReference = firebaseStorage.child(triviaSet.imagePath);
+                        utils.saveFileFromFirebase(context, imagePathReference, triviaSet.imagePath);
+                    }
+                }
+                // removing the last comma and clausing the parenthesis
+                idsTriviaSetsToKeep = idsTriviaSetsToKeep.substring(0, idsTriviaSetsToKeep.length() - 1) + ")";
+
+                query = triviasProvider.returnSelectItemsToDeleteStatement(idsTriviaSetsToKeep,
+                        triviasProvider.TRIVIA_SET_TABLE_NAME, true);
+                Cursor c = db.rawQuery(query, null);
+                if (c != null && c.moveToFirst()) {
+                    do {
+                        utils.deleteImageFromInternalStorage(context, c.getString(c.getColumnIndex(triviasProvider.IMAGE_PATH)));
+                        String where = triviasProvider._ID + "=" + c.getInt(c.getColumnIndex(triviasProvider._ID));
+                        db.delete(triviasProvider.TRIVIA_SET_TABLE_NAME, where, null);
+                    } while (c.moveToNext());
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+                System.out.println("The trivia sets read failed: " + databaseError.getCode());
             }
         });
 
@@ -217,9 +265,5 @@ public class AlarmService extends IntentService {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-    }
-
-    private void deleteItems (String query) {
-        db.rawQuery(query, null);
     }
 }

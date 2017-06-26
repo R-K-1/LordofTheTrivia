@@ -33,6 +33,8 @@ public class TriviasProvider extends ContentProvider {
     public static final String TEXT = "text";
 
     // trivia_set table unique columns
+    public static final String CATEGORY_VERSION = "categoryVersion";
+
 
     // option table unique columns
     public static final String IS_ANSWER = "isAnswer";
@@ -85,7 +87,7 @@ public class TriviasProvider extends ContentProvider {
      */
     private SQLiteDatabase db;
     public static final String DATABASE_NAME = "Trivias.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
 
     // Tables definition and creation
     public static final String TRIVIA_SET_TABLE_NAME = "trivia_set";
@@ -94,6 +96,7 @@ public class TriviasProvider extends ContentProvider {
                     " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " " + FIREBASE_ID + " INTEGER NOT NULL, " +
                     " " + CATEGORY_FIREBASE_ID + " INTEGER NOT NULL, " +
+                    " " + CATEGORY_VERSION + " INTEGER NOT NULL, " +
                     " " + VERSION + " INTEGER NOT NULL, " +
                     " " + NAME + " TEXT NOT NULL, " +
                     " " + IMAGE_PATH + " TEXT);";
