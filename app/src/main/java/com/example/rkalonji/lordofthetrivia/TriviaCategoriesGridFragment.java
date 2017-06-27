@@ -8,13 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 
 /**
  * Created by rkalonji on 06/26/2017.
@@ -33,18 +33,15 @@ public class TriviaCategoriesGridFragment extends Fragment
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.trivia_categories_grid_fragment, container, false);
 
-        GridView gridview = (GridView) rootView.findViewById(R.id.trivia_categories_grid);
-        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        // adapter = new TriviaCategoriesGridAdapter(getActivity(), R.layout.trivia_categories_grid_fragment_item);
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         adapter = new TriviaCategoriesCustomCursorRecyclerViewAdapter(getContext(), null);
         RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.trivia_categories_recycler_view);
         rv.setLayoutManager(sglm);
+        rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
-        // gridview.setAdapter(adapter);
-        // gridview.setOnItemClickListener(this);
 
         utils = new Utils();
-        utils.loadAddBanner(rootView, R.id.adViewTriviaCategoriesGrid);
+        utils.loadAddBanner(rootView, R.id.trivia_categories_ad_view);
 
         getLoaderManager().initLoader(0, null, this);
         return rootView;

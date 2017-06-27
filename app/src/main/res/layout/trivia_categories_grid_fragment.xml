@@ -7,33 +7,18 @@
     android:orientation="vertical"
     tools:context=".TriviaCategoriesGridFragment">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trivia_categories_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/trivia_categories_ad_view"
+        android:layout_marginBottom="10dp"
         android:scrollbars="vertical"
-        android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"
-        android:paddingTop="116dp"
-        android:paddingStart="@dimen/list_side_margin"
-        android:paddingEnd="@dimen/list_side_margin"
-        android:paddingBottom="28dp" />
-
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/trivia_categories_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:numColumns="3"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        android:gravity="center"
-        />
+         />
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adViewTriviaCategoriesGrid"
+        android:id="@+id/trivia_categories_ad_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

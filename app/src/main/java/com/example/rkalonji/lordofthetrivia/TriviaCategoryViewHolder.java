@@ -13,17 +13,19 @@ import android.widget.TextView
  */
 
 ;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder {
+public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     protected TextView name;
     protected ImageView imageView;
     private Utils utils;
     private Context mContext;
+    private int firebaseId;
 
     public TriviaCategoryViewHolder(View v, Context context) {
         super(v);
@@ -34,12 +36,18 @@ public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder {
 
     public void setData(Cursor c) {
         utils = new Utils();
-        // textView1.setText(c.getString(c.getColumnIndex("text")));
         String content = c.getString(c.getColumnIndex(TriviasProvider.NAME));
         name.setText(content);
+
+        firebaseId = c.getInt(c.getColumnIndex(TriviasProvider.FIREBASE_ID));
 
         String imagePath = c.getString(c.getColumnIndex(TriviasProvider.IMAGE_PATH));
         File imageFile = utils.getFileFromInternalStorage(mContext, imagePath);
         Picasso.with(mContext).load(imageFile).into(imageView);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Toast.makeText(view.getContext(), "Clicked Position = " + firebaseId, Toast.LENGTH_SHORT).show();
     }
 }
