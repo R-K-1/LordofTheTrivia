@@ -27,19 +27,19 @@ public class WidgetProvider extends AppWidgetProvider {
         Intent active = new Intent(context, MainActivity.class);
         active.setAction(ACTION_LAUNCH_CATEGORIES_FRAGMENT);
         active.putExtra("target", ACTION_LAUNCH_CATEGORIES_FRAGMENT);
-        PendingIntent actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
+        PendingIntent actionPendingIntent = PendingIntent.getActivity(context, 0, active, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_categories_grid, actionPendingIntent);
 
         active = new Intent(context, MainActivity.class);
         active.setAction(ACTION_LAUNCH_SETS_FRAGMENT);
         active.putExtra("target", ACTION_LAUNCH_SETS_FRAGMENT);
-        actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
+        actionPendingIntent = PendingIntent.getActivity(context, 0, active, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_all_sets_grid, actionPendingIntent);
 
         active = new Intent(context, MainActivity.class);
         active.setAction(ACTION_SCORES_FRAGMENT);
         active.putExtra("target", ACTION_SCORES_FRAGMENT);
-        actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
+        actionPendingIntent = PendingIntent.getActivity(context, 0, active, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_scores_grid, actionPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
