@@ -40,26 +40,6 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_scores_grid, actionPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
-/*        Intent configIntent = new Intent(context, MainActivity.class);
-
-        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.widget_root,
-                PendingIntent.readPendingIntentOrNullFromParcel(context,0, configIntent,0));
-        // remoteViews.setOnClickPendingIntent(R.id.widget_root, configPendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);*/
-/*        final int count = appWidgetIds.length;
-
-        for (int i = 0; i < count; i++) {
-            int widgetId = appWidgetIds[i];
-
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                    R.layout.widget_lottr);
-            Intent intent = new Intent(context, WidgetProvider.class);
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        }*/
     }
 
     @Override
