@@ -62,6 +62,7 @@ public class TriviaCategoriesGridFragment extends Fragment
         super.onDetach();
     }
 
+    // Note that the following method does work with RecyclerView  but is required for Loaders
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
