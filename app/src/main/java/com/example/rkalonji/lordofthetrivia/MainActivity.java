@@ -128,9 +128,21 @@ public class MainActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
 
+        Bundle extras = getIntent().getExtras();
+
         Fragment fragment = null;
         Class fragmentClass;
         fragmentClass = TriviaCategoriesGridFragment.class;
+
+        // The below extra will exist if activity is launched from the widget
+        if (getIntent().hasExtra("target")) {
+            String target = getIntent().getStringExtra("target");
+            if (target.equals(WidgetProvider.ACTION_LAUNCH_SETS_FRAGMENT)) {
+                fragmentClass = TriviaSetsGridFragment.class;
+            } else if (target.equals(WidgetProvider.ACTION_SCORES_FRAGMENT)) {
+                fragmentClass = ScoresGridFragment.class;
+            }
+        }
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();

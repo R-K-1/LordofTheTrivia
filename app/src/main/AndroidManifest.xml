@@ -42,9 +42,12 @@
             android:name=".Sync.AlarmReceiver"
             android:process=":remote"/>
 
-        <receiver android:name=".WidgetProvider" >
+        <receiver android:name="com.example.rkalonji.lordofthetrivia.WidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.rkalonji.lordofthetrivia.WidgetProvider.ACTION_LAUNCH_CATEGORIES_FRAGMENT"/>
+                <action android:name="com.example.rkalonji.lordofthetrivia.WidgetProvider.ACTION_LAUNCH_SETS_FRAGMENT"/>
+                <action android:name="com.example.rkalonji.lordofthetrivia.WidgetProvider.ACTION_SCORES_FRAGMENT"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_lottr_info" />
