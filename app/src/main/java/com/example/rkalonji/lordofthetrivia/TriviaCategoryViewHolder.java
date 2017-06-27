@@ -3,6 +3,7 @@ package com.example.rkalonji.lordofthetrivia;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.Cursor;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,8 +20,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder {
 
+    protected CardView cardView;
     protected TextView name;
     protected ImageView imageView;
     private Utils utils;
@@ -29,6 +31,7 @@ public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder implements
 
     public TriviaCategoryViewHolder(View v, Context context) {
         super(v);
+        cardView =  (CardView) v.findViewById(R.id.trivia_category_card_view);
         name =  (TextView) v.findViewById(android.R.id.text1);
         imageView = (ImageView)  v.findViewById(R.id.trivia_category_image);
         mContext = context;
@@ -44,10 +47,5 @@ public class TriviaCategoryViewHolder extends RecyclerView.ViewHolder implements
         String imagePath = c.getString(c.getColumnIndex(TriviasProvider.IMAGE_PATH));
         File imageFile = utils.getFileFromInternalStorage(mContext, imagePath);
         Picasso.with(mContext).load(imageFile).into(imageView);
-    }
-
-    @Override
-    public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Clicked Position = " + firebaseId, Toast.LENGTH_SHORT).show();
     }
 }

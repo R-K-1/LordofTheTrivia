@@ -33,7 +33,7 @@ public class TriviaCategoriesGridFragment extends Fragment
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.trivia_categories_grid_fragment, container, false);
 
-        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         adapter = new TriviaCategoriesCustomCursorRecyclerViewAdapter(getContext(), null);
         RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.trivia_categories_recycler_view);
         rv.setLayoutManager(sglm);
@@ -65,12 +65,6 @@ public class TriviaCategoriesGridFragment extends Fragment
     // Note that the following method does work with RecyclerView  but is required for Loaders
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        TriviaSetsGridFragment triviaSetsGridFragment = new TriviaSetsGridFragment();
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        // fragmentManager.beginTransaction().replace(R.firebaseId.flContent, fragment).commit();
-        fragmentManager.beginTransaction().replace(R.id.flContent, triviaSetsGridFragment).commit();
     }
 
     @Override

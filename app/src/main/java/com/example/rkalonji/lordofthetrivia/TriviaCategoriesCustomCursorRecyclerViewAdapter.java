@@ -1,7 +1,9 @@
 package com.example.rkalonji.lordofthetrivia;
 
+import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +25,6 @@ public class TriviaCategoriesCustomCursorRecyclerViewAdapter extends TriviaCateg
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-/*        View v = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1, parent, false);
-        return new CustomViewHolder(v);*/
         View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.trivia_categories_grid_fragment_item, parent, false);
@@ -37,6 +37,21 @@ public class TriviaCategoriesCustomCursorRecyclerViewAdapter extends TriviaCateg
         TriviaCategoryViewHolder holder = (TriviaCategoryViewHolder) viewHolder;
         cursor.moveToPosition(cursor.getPosition());
         holder.setData(cursor);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment and specify the fragment to show based on nav item clicked
+                TriviaSetsGridFragment triviaSetsGridFragment = new TriviaSetsGridFragment();
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = ((FragmentActivity) mContext).getSupportFragmentManager();
+                // fragmentManager.beginTransaction().replace(R.firebaseId.flContent, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContent, triviaSetsGridFragment).commit();
+            }
+        });
+    }
+
+    private void switchToTriviaSetsFragments() {
+
     }
 
     @Override
