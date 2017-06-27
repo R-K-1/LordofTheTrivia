@@ -25,20 +25,20 @@ public class WidgetProvider extends AppWidgetProvider {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_lottr);
 
         Intent active = new Intent(context, MainActivity.class);
-        active.putExtra("target", ACTION_LAUNCH_CATEGORIES_FRAGMENT);
         active.setAction(ACTION_LAUNCH_CATEGORIES_FRAGMENT);
+        active.putExtra("target", ACTION_LAUNCH_CATEGORIES_FRAGMENT);
         PendingIntent actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_categories_grid, actionPendingIntent);
 
         active = new Intent(context, MainActivity.class);
-        active.putExtra("target", ACTION_LAUNCH_SETS_FRAGMENT);
         active.setAction(ACTION_LAUNCH_SETS_FRAGMENT);
+        active.putExtra("target", ACTION_LAUNCH_SETS_FRAGMENT);
         actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_all_sets_grid, actionPendingIntent);
 
         active = new Intent(context, MainActivity.class);
-        active.putExtra("target", ACTION_SCORES_FRAGMENT);
         active.setAction(ACTION_SCORES_FRAGMENT);
+        active.putExtra("target", ACTION_SCORES_FRAGMENT);
         actionPendingIntent = PendingIntent.getActivity(context, 0, active, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_launch_scores_grid, actionPendingIntent);
 

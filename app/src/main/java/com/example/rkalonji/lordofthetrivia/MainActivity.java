@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         scheduleAlarm();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        int i = 0;
+    }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
