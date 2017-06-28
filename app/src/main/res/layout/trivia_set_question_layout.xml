@@ -36,7 +36,8 @@
                 android:orientation="vertical"
                 android:layout_below="@+id/trivia_set_test_textView1"
                 android:background="#FFFFFF"
-                android:gravity="center">
+                android:gravity="center"
+                android:contentDescription="@string/action_list_scores">
             </LinearLayout>
 
         </RelativeLayout>

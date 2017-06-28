@@ -16,6 +16,7 @@
         android:verticalSpacing="@dimen/scores_grid_vertical_spacing"
         android:horizontalSpacing="@dimen/scores_grid_horizontal_spacing"
         android:gravity="center"
+        android:contentDescription="@string/trivia_sets_grid_description"
         />
 
     <com.google.android.gms.ads.AdView

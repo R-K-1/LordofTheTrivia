@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/widget_margin"
         android:scrollbars="vertical"
+        android:contentDescription="@string/trivia_categories_recycler_view_description"
          />
 
     <com.google.android.gms.ads.AdView

@@ -2,12 +2,17 @@
     <string name="app_name">Lord of The Trivia</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_open_description">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_close_description">Close navigation drawer</string>
 
     <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_open_description">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_close_description">Close navigation drawer</string>
 
     <string name="navigation_drawer_list_trivia">list trivia sets</string>
+    <string name="navigation_drawer_list_trivia_descripition">list trivia sets</string>
     <string name="navigation_drawer_trivias_subgroup">Trivias</string>
     <string name="navigation_drawer_scores_subgroup">Scores</string>
 
@@ -15,12 +20,32 @@
     <string name="action_launch_test_activity">Test act.</string>
     <string name="action_launch_contacts_fragments">Contacts</string>
     <string name="action_list_categories">Categories</string>
+    <string name="action_list_categories_description">List all trivia set categories</string>
     <string name="action_list_all_trivias">All trivias</string>
+    <string name="action_list_all_trivias_description">List all trivia sets</string>
     <string name="action_list_scores">Best scores</string>
 
     <string name="submit_trivia">Get Score</string>
+    <string name="submit_trivia_description">Get your score and correct answers for this trivia set.</string>
     <string name="reset_trivia">Reset</string>
+    <string name="reset_trivia_description">Reset your answers and scores for this trivia set.</string>
+
+    <string name="is_correct_answer">is a correct answer to the question </string>
 
     <string name="question_id">qId</string>
     <string name="is_answer">isAnswer</string>
+
+    <string name="trivia_categories_recycler_view_description">Scroll through trivia categories;
+        click an item to launch it</string>
+    <string name="trivia_category_cardview_description">Tap to display list of trivias of this category</string>
+
+    <string name="trivia_set_recycler_view_description">Scroll through questions list
+        select one or multiple answers per question. Tap to select; tap again to deselect</string>
+
+    <string name="trivia_sets_grid_description">Scroll through list of trivia sets. Select one
+        to view and ansers questions.</string>
+
+    <string name="widget_launch_categories">Tap to open Lord of The Trivia on the trivia categories list screen</string>
+    <string name="widget_launch_trivia_sets">Tap to open Lord of The Trivia on the trivia sets list screen</string>
+
 </resources>
