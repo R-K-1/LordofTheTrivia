@@ -21,10 +21,11 @@
 
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_icon_width">10dp</dimen>
+    <dimen name="widget_icon_height">20dp</dimen>
     <dimen name="widget_min_width">140dp</dimen>
     <dimen name="widget_min_resize_width">140dp</dimen>
-    <dimen name="widget_min_height">60dp</dimen>
-    <dimen name="widget_min_resize_height">60dp</dimen>
+    <dimen name="widget_min_height">250dp</dimen>
+    <dimen name="widget_min_resize_height">250dp</dimen>
 
     <dimen name="scores_grid_time_padding">5dp</dimen>
     <dimen name="scores_grid_vertical_spacing">5dp</dimen>

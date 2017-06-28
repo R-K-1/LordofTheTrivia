@@ -273,8 +273,8 @@ public class TriviasProvider extends ContentProvider {
                 break;
 
             case SCORES:
-                qb.setTables(CATEGORY_TABLE_NAME);
-                qb.setProjectionMap(CATEGORIES_PROJECTION_MAP);
+                qb.setTables(BEST_SCORE_TABLE_NAME);
+                qb.setProjectionMap(SCORES_PROJECTION_MAP);
                 break;
         }
 

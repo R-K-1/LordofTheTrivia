@@ -35,7 +35,9 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <provider android:name=".TriviasProvider"
-            android:authorities="com.example.rkalonji.lordofthetrivia"/>
+            android:authorities="com.example.rkalonji.lordofthetrivia"
+            android:exported="true"
+        />
 
         <!-- Alarm service used to schedule job retrieving updates from server -->
         <receiver
@@ -52,6 +54,12 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_lottr_info" />
         </receiver>
+
+        <!-- Widget service -->
+        <service
+            android:name=".WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
 
         <service
             android:name=".AlarmService"
