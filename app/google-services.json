@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "517967065109",
+    "firebase_url": "https://lottr-2c8be.firebaseio.com",
+    "project_id": "lottr-2c8be",
+    "storage_bucket": "lottr-2c8be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517967065109:android:f606734ea27f0269",
+        "android_client_info": {
+          "package_name": "com.example.rkalonji.lordofthetrivia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517967065109-lq229bthrrlgn2acdrfc2ustkgs13r9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rkalonji.lordofthetrivia",
+            "certificate_hash": "e7bac8a39e3f10aed9690da55d37605d59427b9f"
+          }
+        },
+        {
+          "client_id": "517967065109-o6u6v6hrtqsmedeq68q8u2436cpk9gg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfTL0almuOODW4r23yiHkDvZ9wLiTkeGk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517967065109-o6u6v6hrtqsmedeq68q8u2436cpk9gg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
