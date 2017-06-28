@@ -8,24 +8,23 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trivia_set_details_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/trivia_set_details_ad_view"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
 
     <Button
         android:id="@+id/submit_trivia"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_above="@+id/trivia_set_details_ad_view"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/trivia_set_details_recycler_view"
         android:text="@string/submit_trivia" />
 
     <Button
         android:id="@+id/reset_trivia"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_above="@+id/trivia_set_details_ad_view"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/trivia_set_details_recycler_view"
         android:text="@string/reset_trivia" />
 
     <com.google.android.gms.ads.AdView
@@ -34,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/reset_trivia"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111">

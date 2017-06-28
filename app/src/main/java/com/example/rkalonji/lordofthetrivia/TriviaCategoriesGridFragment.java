@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,6 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * Created by rkalonji on 06/26/2017.
@@ -25,6 +31,7 @@ public class TriviaCategoriesGridFragment extends Fragment
 
     // private TriviaCategoriesGridAdapter adapter;
     private TriviaCategoriesCustomCursorRecyclerViewAdapter adapter;
+    private ImageView collapsingToolbarImage;
     private Utils utils;
 
     @Override
@@ -33,7 +40,7 @@ public class TriviaCategoriesGridFragment extends Fragment
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.trivia_categories_grid_fragment, container, false);
 
-        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         adapter = new TriviaCategoriesCustomCursorRecyclerViewAdapter(getContext(), null);
         RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.trivia_categories_recycler_view);
         rv.setLayoutManager(sglm);
@@ -43,8 +50,18 @@ public class TriviaCategoriesGridFragment extends Fragment
         utils = new Utils();
         utils.loadAddBanner(rootView, R.id.trivia_categories_ad_view);
 
+        View appBar = inflater.inflate(R.layout.app_bar_main, container, false);
+        collapsingToolbarImage = (ImageView) appBar.findViewById(R.id.collapsing_toolbar_image);
+
         getLoaderManager().initLoader(0, null, this);
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        File imageFile = utils.getFileFromInternalStorage(getContext(), "LOTTRImgCatPeople.jpg");
+        Picasso.with(getContext()).load(imageFile).into(collapsingToolbarImage);
     }
 
     @Override
@@ -87,4 +104,5 @@ public class TriviaCategoriesGridFragment extends Fragment
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
+
 }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_app_bar_layout);
         setSupportActionBar(toolbar);
 
         // Find our drawer view
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         utils = new Utils();
-        utils.loadAddBanner(mDrawer, R.id.adViewMainActivity);
 
         scheduleAlarm();
     }
@@ -90,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_all_trivias:
                 fragmentClass = TriviaSetsGridFragment.class;
                 break;
-            case R.id.nav_scores:
+            /*case R.id.nav_scores:
                 fragmentClass = ScoresGridFragment.class;
-                break;
+                break;*/
             default:
                 fragmentClass = TriviaSetsGridFragment.class;
         }

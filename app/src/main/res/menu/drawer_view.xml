@@ -17,7 +17,7 @@
             </menu>
         </item>
 
-        <item android:title="@string/navigation_drawer_scores_subgroup">
+<!--        <item android:title="@string/navigation_drawer_scores_subgroup">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
@@ -26,6 +26,6 @@
                         android:title="@string/action_list_scores" />
                 </group>
             </menu>
-        </item>
+        </item>-->
     </group>
 </menu>
