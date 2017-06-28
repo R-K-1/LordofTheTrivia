@@ -10,6 +10,10 @@
     <dimen name="fab_press_translation_z">6dp</dimen>
 
     <dimen name="appbar_elevation">4dp</dimen>
+    <dimen name="appbar_height">192dp</dimen>
+    <dimen name="collps_toolbar_image_min_height">20dp</dimen>
+
+    <dimen name="nav_padding">20dp</dimen>
 
     <dimen name="card_elevation">2dp</dimen>
 
@@ -21,5 +25,20 @@
     <dimen name="widget_min_resize_width">140dp</dimen>
     <dimen name="widget_min_height">60dp</dimen>
     <dimen name="widget_min_resize_height">60dp</dimen>
+
+    <dimen name="scores_grid_time_padding">5dp</dimen>
+    <dimen name="scores_grid_vertical_spacing">5dp</dimen>
+    <dimen name="scores_grid_horizontal_spacing">5dp</dimen>
+    <dimen name="scores_grid_image_width">150dp</dimen>
+    <dimen name="scores_grid_image_height">150dp</dimen>
+    <dimen name="scores_grid_textview_padding_top">6dip</dimen>
+
+    <dimen name="trivia_set_question_textview_margin">6dip</dimen>
+
+    <dimen name="trivia_category_cardview_text_padding">5dp</dimen>
+    <dimen name="trivia_category_corner_radius">2dp</dimen>
+    <dimen name="trivia_category_cardview_content_padding">10dp</dimen>
+    <dimen name="trivia_category_item_textview_padding">8dp</dimen>
+    <dimen name="trivia_sets_grid_item_padding">4dp</dimen>
 
 </resources>

@@ -26,8 +26,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:gravity="center"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
+            android:paddingTop="@dimen/trivia_category_item_textview_padding"
+            android:paddingBottom="@dimen/trivia_category_item_textview_padding"
+            android:background="@color/colorPrimaryDark"
             />
 
         <ImageView android:id="@+id/trivia_category_image"

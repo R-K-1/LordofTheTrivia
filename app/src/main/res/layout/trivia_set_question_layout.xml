@@ -11,9 +11,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="10dp"
+        android:layout_margin="@dimen/trivia_set_question_textview_margin"
+        card_view:cardCornerRadius="@dimen/trivia_category_corner_radius"
+        card_view:contentPadding="@dimen/trivia_category_cardview_content_padding"
         android:elevation="@dimen/card_elevation"
         app:theme="@style/AppTheme.NoActionBar.Card">
 
@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:id="@+id/trivia_set_question_options_layout"

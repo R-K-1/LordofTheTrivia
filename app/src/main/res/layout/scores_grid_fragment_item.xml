@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="@dimen/list_side_margin"
+    android:layout_marginRight="@dimen/list_side_margin"
+    android:layout_marginTop="@dimen/list_side_margin"
+    android:layout_marginBottom="@dimen/list_side_margin"
     android:elevation="@dimen/card_elevation"
     android:foreground="?selectableItemBackground"
     app:theme="@style/AppTheme.NoActionBar.Card">
 
     <ImageView android:id="@+id/trivia_category_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_width="@dimen/scores_grid_image_width"
+        android:layout_height="@dimen/scores_grid_image_height"/>
 
     <TextView
         android:id="@android:id/text1"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="center_vertical"
-        android:paddingTop="6dip"
+        android:paddingTop="@dimen/scores_grid_textview_padding_top"
         />
     <TextView
         android:id="@android:id/text2"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="center_vertical"
-        android:paddingTop="6dip"
+        android:paddingTop="@dimen/scores_grid_textview_padding_top"
         />
     <TextView
         android:id="@+id/score"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="center_vertical"
-        android:paddingTop="6dip"
+        android:paddingTop="@dimen/scores_grid_textview_padding_top"
         />
 
 </android.support.v7.widget.CardView>

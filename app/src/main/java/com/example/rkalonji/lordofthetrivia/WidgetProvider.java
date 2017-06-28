@@ -40,7 +40,7 @@ public class WidgetProvider extends AppWidgetProvider {
         active.setAction(ACTION_SCORES_FRAGMENT);
         active.putExtra("target", ACTION_SCORES_FRAGMENT);
         actionPendingIntent = PendingIntent.getActivity(context, 0, active, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.widget_launch_scores_grid, actionPendingIntent);
+        // remoteViews.setOnClickPendingIntent(R.id.widget_launch_scores_grid, actionPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }

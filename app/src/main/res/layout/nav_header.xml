@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nav_header_linear_layout"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="@dimen/appbar_height"
     android:background="?attr/colorPrimaryDark"
-    android:padding="16dp"
+    android:padding="@dimen/nav_padding"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="bottom">

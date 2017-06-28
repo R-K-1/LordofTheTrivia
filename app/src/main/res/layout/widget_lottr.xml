@@ -13,20 +13,20 @@
         android:layout_width="@dimen/widget_icon_width"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/ic_menu_gallery"/>
+        android:src="@drawable/ic_clear_all_black_24dp"/>
 
     <ImageView
         android:id="@+id/widget_launch_all_sets_grid"
         android:layout_width="@dimen/widget_icon_width"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/ic_menu_gallery"/>
+        android:src="@drawable/ic_playlist_play_black_24dp"/>
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/widget_launch_scores_grid"
         android:layout_width="@dimen/widget_icon_width"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/ic_menu_gallery"/>
+        android:src="@drawable/ic_menu_gallery"/>-->
 
 </LinearLayout>
